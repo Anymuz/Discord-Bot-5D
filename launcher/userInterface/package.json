@@ -1,0 +1,20 @@
+{
+  "name": "anymuz-interaction",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "The user interface package used to construct the launcher",
+  "main": "./index.js",
+  "exports": {
+    ".": "./index.js",
+    "./*": "./class/*.js"
+  },
+  "imports": {
+    "#internal/*": "./internal/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "tbd"
+  },
+  "author": "Anymuz",
+  "license": "ISC"
+}

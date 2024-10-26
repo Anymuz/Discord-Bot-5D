@@ -1,0 +1,7 @@
+{
+    "name":"Bot Register",
+    "Description": "The names to reference each bot are stored here, required for the launcher",
+    "botRegister": [
+        "default"
+    ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "botbuild-handlers",
+  "type": "module",
+  "version": "1.0.0",
+  "export": "handlers.js",
+  "keywords": [],
+  "author": "Anymuz",
+  "license": "ISC",
+  "description": "The handler for bot functionality."
+}

@@ -1,0 +1,59 @@
+{
+  "name": "anymuz-bot",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node bot.js",
+    "dev": "nodemon bot.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.16.2",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "eslint": "^9.11.0",
+    "nodemon": "^3.1.7"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./*": "./bots/*/bot.js",
+    "./botlist": "./register.json",
+    "./command/*": "./commands/command/*.js",
+    "./commandPack/*": "./commands/packs/*.js",
+    "./config": "./config.json",
+    "./config/*": "./bots/*/config.json",
+    "./deploy/*": "./bots/*/deploy.js",
+    "./handlers": "./handlers/handlers.js",
+    "./handlers/*": "./handlers/*.js",
+    "./handlers/bot-commands": "./handlers/command/server.js",
+    "./handlers/server-commands": "./handlers/command/server.js",
+    "./server/*": "./servers/*/*.js",
+    "./server/*/config": "./servers/*/*.json",
+    "./setup": "./launcher/setup/setup.js",
+    "./setup/*": "./launcher/setup/*.js"
+
+  },
+  "imports": {
+    "#bots/*": "./bots/*/bot.js",
+    "#bots/deploy/*": "./bots/*/deploy",
+    "#commands/*": "./commands/command/*.js",
+    "#commands/bot/*": "./bots/*/commands.js",
+    "#commands/server/*": "./servers/*/*.js",
+    "#commandPacks/*": "./commands/packs/*.js",
+    "#config": "./config.json",
+    "#config/bot/*": "./bots/*/config.json",
+    "#config/botRegister": "./register.json",
+    "#config/server/*": "./servers/*/*.json",
+    "#handlers": "./handlers/handlers.js",
+    "#handlers/serverCommands": "./handlers/command/server.js",
+    "#handlers/*": "./handlers/*.js",
+    "#servers/*": "./servers/*/*.js",
+    "#setup": "./launcher/setup/setup.js",
+    "#setup/*": "./launcher/setup/*.js"
+  },
+  "bundleDependencies": [
+    "discord.js",
+    "dotenv"
+  ]
+}

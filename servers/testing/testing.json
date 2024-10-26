@@ -1,0 +1,8 @@
+{
+    "id": "1286515001775095808",
+    "server": "testing",
+    "decription": "The testing server for bot tests.",
+    "commandPacks": [
+        "test"
+    ]
+}
