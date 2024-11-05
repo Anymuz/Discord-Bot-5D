@@ -1,7 +1,54 @@
 import stringHandler from "./launcher/userInterface/internal/string-operations.js";
 
-console.log(stringHandler.padString(64, '-',"Anymuz"));
-console.log(stringHandler.padString(64, '=', "Shtokavin", '{}'));
+// function padString(length, paddingChar, word, encloser) {
+//     // Input validation
+//     if (typeof length !== 'number' || !Number.isInteger(length) || length <= 0) {
+//         throw new Error("The length must be a positive integer.");
+//     }
+//     if (typeof paddingChar !== 'string' || paddingChar.length !== 1) {
+//         throw new Error("The padding character must be a single character.");
+//     }
+//     if (typeof word !== 'string') {
+//         throw new Error("The word must be a string.");
+//     }
+//     if (typeof encloser !== 'string' || encloser.length !== 2) {
+//         throw new Error("The encloser must be a two-character string.");
+//     }
+
+//     // Calculate inner content with encloser
+//     const innerContent = `${encloser[0]}${word}${encloser[1]}`;
+//     const paddingLength = length - innerContent.length;
+//     if (paddingLength < 0) {
+//         throw new Error("The specified length is too short to contain the word and encloser.");
+//     }
+
+//     // Calculate padding on each side
+//     const leftPaddingLength = Math.floor(paddingLength / 2);
+//     const rightPaddingLength = paddingLength - leftPaddingLength;
+
+//     // Create the padded string
+//     const leftPadding = paddingChar.repeat(leftPaddingLength);
+//     const rightPadding = paddingChar.repeat(rightPaddingLength);
+
+//     // Return the final padded string
+//     return `${leftPadding}${innerContent}${rightPadding}`;
+// }
+
+// // Example usage:
+// console.log(padString(64, '-', "Shtokavin", '[]'));
+
+
+// Example usage:
+//console.log(padString(64, '+', "Anymuz", '{}'));
+console.log('++++++++++++++++++++++++++++{Anymuz}++++++++++++++++++++++++++++'.length)
+console.log(stringHandler.padString(64, '+', "Anymuz", '{}'));
+console.log('+++++++++++++++++++++++++++++{Anymuz}+++++++++++++++++++++++++++++'.length)
+
+console.log(`20 per g means 1 ounce is: ${20*28}`);
+console.log(`That means 1KG which is ${1000/28} ounces`);
+console.log(`so 1KH would be ${(1000/28)*28*20}`)
+console.log(35.714*560)
+// console.log(stringHandler.padString(64, '-', "Shtokavin", '[]'));
 // let string_even =  'Anymuz', string_odd = 'Shtokavin';
 // console.log(`Even String: ${string_even}  |  Odd String: ${string_odd}`);
 // console.log(`Expectation for Even String | Back: 'Muz' | Front: 'Any' | Mid:Null |`);

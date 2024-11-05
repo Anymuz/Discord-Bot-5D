@@ -2,3 +2,4 @@ node_modules
 .env
 config.json
 GBT_index.js
+README_OLD.MD

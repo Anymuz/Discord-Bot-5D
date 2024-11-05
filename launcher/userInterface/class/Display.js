@@ -1,78 +1,69 @@
 import Menu from "anymuz-interaction/Menu";
 import { OptionsDisplay } from "anymuz-interaction/OptionsDisplay";
-import typeValidator from "#internal/type-validation";
+import typeValidator from '#internal/type-validation';
+import stringOperation from '#internal/string-operations'
 
 // CLASS Display: Handles displaying the menu to the user.
 // -----------------------------------------------------//
 export class Display {
-    constructor(heading, text){	
-        this.heading = typeValidator.typeCheck(heading, String);
-        this.optionsDisplay = null; // Initialize displayOption as null or another value as needed
-        this.prompt = ``;
-        this.text = typeValidator.typeCheck(text, String);
-    };
+    constructor(heading,text,encasing='[]',fillChar='-',lineLength=64, optionsDisplay){
+		this.base_heading=``;
+		this.encasing=typeValidator.stringCheck(encasing,2);
+		this.filler=typeValidator.stringCheck(fillChar,1);	
+        this.heading=typeValidator.typeCheck(heading,String);
+		this.line_size=typeValidator.numberCheck(lineLength,typeValidator.type_integer);
+		this.line_spacer=stringOperation.charEvenString(this.line_size,this.filler);
+		this.text=typeValidator.typeCheck(text,String);
+        this.options_display=typeValidator.typeCheck(optionsDisplay, OptionsDisplay);
+        this.prompt=``};
+	// ---------------- //
     // Utility Methods:
-    // --------------//
+    // ---------------- //
+	getEncasing(){return this.encasing}
     getHeading(){return this.heading};
+	getLineSpacer(){return this.line_spacer};
     getText(){return this.text};
     setHeading(heading){this.heading=heading};
-    setText(text){this.text=typeValidator.typeCheck(text, String)};
+	setLineSpacer(fillChar=this.fillChar){this.filler = typeValidator.stringCheck(fillChar,1);
+		this.line_spacer=stringOperation.charEvenString(this.line_size,fillChar)};
+    setText(text){this.text=typeValidator.typeCheck(text,String)};
     // --------------//
     // Functional Methods:
     // -----------------//
     present(menu, options){
 		options = typeValidator.typeCheckArray(options,Option);
-		menu = typeValidator.typeCheck(menu, Menu);
+		menu = typeValidator.typeCheck(menu,Menu);
 		this.#setPrompt(menu);
-		
-		let userInput = this.#showPrompt((callback) =>{return callback})
-		return userInput;
-        // function here to use display heading and text and use optionsDisplay
-    };
+		this.displayHeading();
+		this.options_display.displayOptions(menu, options);
+		let userInput = this.#processUserInput(menu);
+		return userInput};
 	//setMenu(menu){this.menu=typeCheck(menu,Menu)};
-    setOptionsDisplay(optionsDisplay){this.optionsDisplay=typeValidator.typeCheck(optionsDisplay,OptionsDisplay)};
-	#setPrompt(menu){menu = typeCheck(menu, Menu);
+	#processUserInput(menu){let userInput=this.#showPrompt(callback=>{return callback}); //redo
+		let chosen;
+		if(menu.nameInput){for(let choice of [index,menu.options]){choice=typeValidator.typeCheck(choice,Option);
+			if(choice==userInput){chosen=typeValidator.typeCheck(choice,Option);
+				return{choice}}else{chosen=false;
+			this.menu.menuResponse.setNegative(`${choice} is not a valid option, please enter the exact name of the chosen option.`)}}}
+		else if(!menu.nameInput){for(let choice in this.options){choice=typeValidator.typeCheck(choice,Option)
+			if(choice==userInput){chosen=typeValidator.typeCheck(choice,Option);
+				return{choice}}else{chosen=false;
+			this.menu.menuResponse.setNegative(`${choice} is not a valid option, please enter a number that corresponds to the chosen option.`);
+		}}}else{throw new Error(`An error has occured, nameInput has not been set correctly!`)}};
+	// ----------------//
+	#setPrompt(menu){menu=typeValidator.typeCheck(menu,Menu);
 		if (menu.nameInput){this.prompt=`Please input answer: `}
         else if(!menu.nameInput){this.prompt=`Please input corresponding number: `}
         else{throw new Error(`An error has occured, nameInput has not be set correctly!`)}};
+
 	#showPrompt(callback){this.userInterface.question(this.prompt,(userInput)=>{callback(userInput)})};
-	formatHeading(){ 
-		const base_header=`----------------------------------------------------------------`; //64 // Consider adding more options like this.paddingchar.
-		console.log(base_header)
-		let half_header = base_header.slice(0, 32);
-		let display_heading;
-		let split_index=this.heading.length/2
-		let mid_char=this.heading.charAt((this.heading.length)/2)
-		let front_half=`[${this.heading.slice(0,split_index)}`;
-		let back_half=`${this.heading.slice(split_index,this.heading.length)}]`;
-		half_header=half_header.slice(0,0-(front_half.length));
-		if (this.heading.length % 2 != 0){
-			display_heading=half_header.slice(0,-1)+front_half+mid_char+back_half.slice(1)+half_header;
-		} else {
-			display_heading=half_header+front_half+back_half+half_header;
-		}
-		return display_heading;		
-	}
-		// const askQuestion = (question, callback) => {
-		// 	userInterface.question(question, (answer) => {
-		// 		callback(answer)
-		// 	})
-		// };
 
-
-	#processUserInput(){let userInput=this.#showPrompt(callback=>{return callback});
-		var chosen;
-		if(this.nameInput){for(let choice of [index,this.options]){choice=typeCheck(choice,Option);
-			if(choice==userInput){chosen=typeCheck(choice,Option);
-			break}else{chosen=false;
-			this.menu.menuResponse.setNegative(`Choice is not a valid option, please enter the exact name of the chosen option.`);}}}
-		else if(!this.nameInput){for(let choice in this.options){choice=typeCheck(choice,Option);
-			if(choice==userInput){chosen=typeCheck(choice,Option);
-			break}else{chosen=false;
-			this.menu.menuResponse.setNegative(`Choice is not a valid option, please enter a number that corresponds to the chosen option.`);
-		}}}else{throw new Error(`An error has occured, nameInput has not been set correctly!`)};
-		return{choice}};
-	// ----------------//
+	setOptionsDisplay(optionsDisplay){this.options_display=typeValidator.typeCheck(optionsDisplay,OptionsDisplay)};
+	displayHeading(encasing=this.encasing,filler=this.filler){ 
+		if (encasing!=this.encasing||filler != this.filler){this.encasing=typeValidator.stringCheck(encasing,2);
+			this.filler=typeValidator.stringCheck(filler);
+			const base_heading=stringOperation.padString(this.line_size,this.filler,this.heading,this.encasing)
+			console.log(base_heading)}};	
 };
 // -----------------------------------------------------//
 

@@ -12,9 +12,10 @@ Each menu must take in a userInterface object from readline aswell.
 */
 
 import readline from'readline';
-import{typeCheck,typeCheckArray}from "../internal/type-validation";
-import{Display} from "anymuz-interaction/Display";
-import{MenuResponse}from'anymuz-interaction/InterfaceResponse';
+import typeValidator from '#internal/type-validation';
+import stringOperation from '#internal/string-operations'
+import {Display} from "anymuz-interaction/Display";
+import {MenuResponse} from'anymuz-interaction/InterfaceResponse';
 
 //import {}
 
@@ -32,10 +33,10 @@ export default class Menu{
         if(display!= typeof(Display)){throw new Error(`Invalid Type: display must be a Display object.`)};
         if(options!= typeof(Array)){throw new Error(`Invalid Type: options must be an array of Option objects.`)};*/  
         this.abortControl=new AbortController();
-        this.display=typeCheck(display,Display);
+        this.display=typeValidator.typeCheck(display,Display);
         this.messageResponse=new MenuResponse();
-        this.nameInput=typeCheck(nameInput,Boolean);
-        this.options=typeCheckArray(options,Option);//Option[]
+        this.nameInput=typeValidator.typeCheck(nameInput,Boolean);
+        this.options=typeValidator.typeCheckArray(options,Option);//Option[]
         this.userInterface=readline.createInterface({input:process.stdin,output:process.stdout});//Readline
         this.target=abortControl.signal;
     };
@@ -46,9 +47,9 @@ export default class Menu{
     getOption(index){return this.options[index]};
     removeAllOptions(){this.options=[]};
     removeOption(index){delete this.options[index]};
-    setAllOptions(options){this.options=typeCheckArray(options,Option)};
-    setNameInput(nameInput){this.nameInput=typeCheck(nameInput,Boolean)};
-    setOption(index,option){this.options[index]=typeCheck(option)};
+    setAllOptions(options){this.options=typeValidator.typeCheckArray(options,Option)};
+    setNameInput(nameInput){this.nameInput=typeValidator.typeCheck(nameInput,Boolean)};
+    setOption(index,option){this.options[index]=typeValidator.typeCheck(option, Option)};
     //----------------- //
     // Functional methods:
     //-------------------- //
