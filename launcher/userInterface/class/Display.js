@@ -1,29 +1,25 @@
+// Import Modules:
+//---------------- //
 import Display from "anymuz-interaction/Display"
 import Menu from "anymuz-interaction/Menu";
 import OptionsDisplay from "anymuz-interaction/OptionsDisplay";
-import typeValidator from '#internal/type-validation';
-import stringOperation from '#internal/string-operations'
-
-import { ExecutionResponse, MenuResponse, ReplyResponse } from 'anymuz-interaction/InterfaceResponse';
-import { Option } from 'anymuz-interaction/Option';
-import { Display } from 'anymuz-interaction/Display'
-import { Menu } from 'anymuz-interaction/Menu'
-import { OptionsDisplay } from 'anymuz-interaction/OptionsDisplay'
-
+import StringOperation from '#internal/StringOperation';
+import TypeValidator from '#internal/TypeValidation';
+//---------------- //
 // CLASS Display: Handles displaying the menu to the user.
 // ------------------------------------------------------- //
-export class Display {
-    constructor(heading,text,encasing='[]',fillChar='-',lineLength=64, optionsDisplay){
-		this.base_heading=``;
-		this.encasing=typeValidator.stringCheck(encasing,2);
-		this.filler=typeValidator.stringCheck(fillChar,1);	
-        this.heading=typeValidator.typeCheck(heading,String);
-		this.line_size=typeValidator.numberCheck(lineLength,typeValidator.type_integer);
-		this.line_spacer=stringOperation.charEvenString(this.line_size,this.filler);
-		this.text=typeValidator.typeCheck(text,String);
-        this.options_display=typeValidator.typeCheck(optionsDisplay, OptionsDisplay);
-        this.prompt=``};
-	// ---------------- //
+export default class Display {
+	// Constructor Method:
+	// ------------------- //
+    constructor(heading,text,encasing='[]',fillChar='-',lineLength=64,optionsDisplay){this.encasing=TypeValidator.stringCheck(encasing,2);
+		this.filler=TypeValidator.stringCheck(fillChar,1);	
+        this.heading=TypeValidator.typeCheck(heading,String);
+		this.line_size=TypeValidator.numberCheck(lineLength,TypeValidator.type_integer);
+		this.line_spacer=StringOperation.charEvenString(this.line_size,this.filler);
+		this.OptionsDisplay=TypeValidator.typeCheck(optionsDisplay,OptionsDisplay);
+		this.prompt=``;
+		this.text=TypeValidator.typeCheck(text,String)};
+	// ------------------- //
     // Utility Methods:
     // ---------------- //
 	getEncasing(){return this.encasing}
@@ -31,48 +27,58 @@ export class Display {
 	getLineSpacer(){return this.line_spacer};
     getText(){return this.text};
     setHeading(heading){this.heading=heading};
-	setLineSpacer(fillChar=this.fillChar){this.filler = typeValidator.stringCheck(fillChar,1);
-		this.line_spacer=stringOperation.charEvenString(this.line_size,fillChar)};
-    setText(text){this.text=typeValidator.typeCheck(text,String)};
+	setLineSpacer(fillChar=this.filler){this.filler = TypeValidator.stringCheck(fillChar,1);
+		this.line_spacer=StringOperation.charEvenString(this.line_size,this.filler)};
+    setText(text){this.text=TypeValidator.typeCheck(text,String)};
     // --------------//
+	// Internal Methods:
+    // ----------------- //
+	// Method setPrompt(menu) - Takes a Menu object as input and then determines the right prompt:
+	#setPrompt(menu){menu=TypeValidator.typeCheck(menu,Menu);
+		if (menu.name_input){this.prompt=`Please input answer: `}
+		else if(!menu.name_input){this.prompt=`Please input corresponding number: `}
+		else{throw new Error(`An error has occured, nameInput has not be set correctly!`)}};
+	// Method showPrompt() - Use readline to prompt user input:
+	#showPrompt(){return this.userInterface.question(this.prompt,(userInput)=>{callback(userInput)})};
+	// ----------------- //
     // Functional Methods:
-    // -----------------//
-    present(menu, options){
-		options = typeValidator.typeCheckArray(options,Option);
-		menu = typeValidator.typeCheck(menu,Menu);
+    // ------------------- //
+	// Method displayHeading(encasing,filler) - Formats and outputs the heading as the menu title:
+	displayHeading(encasing=this.encasing,filler=this.filler){if(encasing!=this.encasing||filler!=this.filler){this.encasing=TypeValidator.stringCheck(encasing,2);
+			this.filler=TypeValidator.stringCheck(filler);
+			const base_heading=StringOperation.padString(this.line_size,this.filler,this.heading,this.encasing)
+			console.log(base_heading)}};
+	// Method present(menu, options) - Displays the Menu object passed in as parameter:	
+    present(menu){menu=TypeValidator.typeCheck(menu,Menu);
 		this.#setPrompt(menu);
 		this.displayHeading();
-		this.options_display.displayOptions();
-		let userInput = this.#processUserInput(menu);
+		this.OptionsDisplay.displayOptions();
+		let userInput=this.#showPrompt();
 		return userInput};
-	//setMenu(menu){this.menu=typeCheck(menu,Menu)};
-	#processUserInput(menu){let user_input=this.#showPrompt(callback=>{return callback}); //redo
-		let chosen;
-		if(menu.name_input){for(let choice of [index,menu.options]){choice=typeValidator.typeCheck(choice,Option);
-			if(choice==user_input){chosen=typeValidator.typeCheck(choice,Option);
-				return{choice}}else{chosen=false;
-			this.menu.menuResponse.setNegative(`${choice} is not a valid option, please enter the exact name of the chosen option.`)}}}
-		else if(!menu.name_input){for(let choice in this.options){choice=typeValidator.typeCheck(choice,Option)
-			if(choice==user_input){chosen=typeValidator.typeCheck(choice,Option);
-				return{choice}}else{chosen=false;
-			this.menu.menuResponse.setNegative(`${choice} is not a valid option, please enter a number that corresponds to the chosen option.`);
-		}}}else{throw new Error(`An error has occured, nameInput has not been set correctly!`)}};
-	// ----------------//
-	#setPrompt(menu){menu=typeValidator.typeCheck(menu,Menu);
-		if (menu.name_input){this.prompt=`Please input answer: `}
-        else if(!menu.name_input){this.prompt=`Please input corresponding number: `}
-        else{throw new Error(`An error has occured, nameInput has not be set correctly!`)}};
-
-	#showPrompt(callback){this.userInterface.question(this.prompt,(userInput)=>{callback(userInput)})};
-
-	setOptionsDisplay(optionsDisplay){this.options_display=typeValidator.typeCheck(optionsDisplay,OptionsDisplay)};
-	displayHeading(encasing=this.encasing,filler=this.filler){ 
-		if (encasing!=this.encasing||filler != this.filler){this.encasing=typeValidator.stringCheck(encasing,2);
-			this.filler=typeValidator.stringCheck(filler);
-			const base_heading=stringOperation.padString(this.line_size,this.filler,this.heading,this.encasing)
-			console.log(base_heading)}};	
-};
+	// Method setOptionsDisplay(OptionsDisplay) - Assigns an OptionsDisplay object to this display:
+	setOptionsDisplay(optionsDisplay){this.optionsDisplay=TypeValidator.typeCheck(optionsDisplay,OptionsDisplay)}};
+    // ------------------- //
 // ------------------------------------------------------- //
+
+
+
+
+
+
+
+
+
+	// #processUserInput(menu){let user_input=this.#showPrompt(callback=>{return callback});
+	// 	let chosen;
+	// 	if(menu.name_input){for(let choice of [index,menu.options]){choice=TypeValidator.typeCheck(choice,Option);
+	// 		if(choice==user_input){chosen=TypeValidator.typeCheck(choice,Option);
+	// 			return{choice}}else{chosen=false;
+	// 		this.menu.menuResponse.setNegative(`${choice} is not a valid option, please enter the exact name of the chosen option.`)}}}
+	// 	else if(!menu.name_input){for(let choice in this.options){choice=TypeValidator.typeCheck(choice,Option)
+	// 		if(choice==user_input){chosen=TypeValidator.typeCheck(choice,Option);
+	// 			return{choice}}else{chosen=false;
+	// 		this.menu.menuResponse.setNegative(`${choice} is not a valid option, please enter a number that corresponds to the chosen option.`);
+	// 	}}}else{throw new Error(`An error has occured, nameInput has not been set correctly!`)}};
 
 // const mainMenuDisplay = {
 // 	heading: "---------[Bot Launch Controller]---------",

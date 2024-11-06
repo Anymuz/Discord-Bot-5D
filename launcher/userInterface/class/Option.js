@@ -1,25 +1,20 @@
-import typeValidator from '#internal/type-validation';
-import {ExecutionResponse,ReplyResponse} from 'anymuz-interaction/InterfaceResponse';
+// Import Modules:
+//---------------- //
+import AbstractResponse from 'anymuz-interaction/AbstractResponse';
 import Menu from 'anymuz-interaction/Menu'
-import Option from 'anymuz-interaction/Option';
-
-// Option class
-export class Option {
-    constructor(label, type, response, action = null, targetMenu = null) {
-        const VALLID_TYPES=['execution','redirection'];
+import TypeValidator from '#internal/TypeValidation';
+//---------------- //
+// CLASS Option: An interface menu option, can either call a function or script or redirect to another menu.
+// --------------------------------------------------------------------------------------------------------- //
+export default class Option {
+    constructor(label,type,response,action=null,targetMenu=null){const VALLID_TYPES=['execution','redirection'];
         if(!VALLID_TYPES.includes(type)){throw new Error(`Invalid Type: ${type}, Option type must be either '${VALLID_TYPES.join(' or ')}'`)};
-        this.label = typeValidator.typeCheck(label, String); 
-        this.type = typeValidator.typeCheck(type, Boolean); 
-        if(this.type === 'execution'){
-            this.action = typeValidator.typeCheck(action, typeof(String()));
-            this.response = typeValidator.typeCheck(response, ExecutionResponse);
-        }else{
-            this.redirection=typeValidator.typeCheck(targetMenu, Menu);
-            this.response=typeValidator.typeCheck(response, ReplyResponse);
-        };
-    }
-
-    //if(!NUMBER_TYPES.includes(type))
+        this.label=TypeValidator.typeCheck(label, String); 
+        this.type=TypeValidator.typeCheck(type, Boolean); 
+        if(this.type==='execution'){this.action=TypeValidator.typeCheck(action,typeof(String()));
+            this.response=TypeValidator.typeCheck(response,AbstractResponse.ExecutionResponse)}
+            else{this.redirection=TypeValidator.typeCheck(targetMenu,Menu);
+            this.response=TypeValidator.typeCheck(response,AbstractResponse.ReplyResponse)}};
 
     execute() {
         if (this.type === 'execution' && this.action) {
@@ -35,5 +30,5 @@ export class Option {
             this.response.printError();
         }
     }
-}
-// //
+};
+// --------------------------------------------------------------------------------------------------------- //

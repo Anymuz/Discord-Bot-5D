@@ -1,4 +1,6 @@
-import stringOperation from "#internal/string-operations";
+// Import Modules:
+import StringOperation from "#internal/StringOperation";
+//---------------- //
 // Private constants and functions used by exported functions: 
 // ----------------------------------------------------------- //
 const NUMBER_TYPES=['int','float'];
@@ -9,7 +11,7 @@ const numberType=(value)=>{value = typeCheck(value, Number);
 // ----------------------------------------------------------- //
 // Exported Functions for use in package: 
 // -------------------------------------- //
-export const stringCheck=(string, length)=>{if(stringOperation.checkLength(typeCheck(string, String), length)){return string}else
+export const stringCheck=(string, length)=>{if(StringOperation.checkLength(typeCheck(string, String), length)){return string}else
     {throw new Error(invalidParameterMessage(string, `Please specify only a ${length} character string for this function.`))}};
 export const type_integer=NUMBER_TYPES[0];
 export const type_float=NUMBER_TYPES[1];
