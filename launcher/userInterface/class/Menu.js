@@ -13,9 +13,9 @@ Each menu must take in a userInterface object from readline aswell.
 
 import readline from'readline';
 import typeValidator from '#internal/type-validation';
-import stringOperation from '#internal/string-operations'
-import {Display} from "anymuz-interaction/Display";
-import {MenuResponse} from'anymuz-interaction/InterfaceResponse';
+import Display from "anymuz-interaction/Display";
+import {MenuResponse} from 'anymuz-interaction/InterfaceResponse';
+import Option from 'anymuz-interaction/Option';
 
 //import {}
 
@@ -34,11 +34,11 @@ export default class Menu{
         if(options!= typeof(Array)){throw new Error(`Invalid Type: options must be an array of Option objects.`)};*/  
         this.abortControl=new AbortController();
         this.display=typeValidator.typeCheck(display,Display);
-        this.messageResponse=new MenuResponse();
-        this.nameInput=typeValidator.typeCheck(nameInput,Boolean);
+        this.message_response=new MenuResponse();
+        this.name_input=typeValidator.typeCheck(nameInput,Boolean);
         this.options=typeValidator.typeCheckArray(options,Option);//Option[]
         this.userInterface=readline.createInterface({input:process.stdin,output:process.stdout});//Readline
-        this.target=abortControl.signal;
+        this.target=abortControl.signal; //use?
     };
     // Utility Methods:
     //----------------- //
@@ -49,7 +49,7 @@ export default class Menu{
     removeOption(index){delete this.options[index]};
     setAllOptions(options){this.options=typeValidator.typeCheckArray(options,Option)};
     setNameInput(nameInput){this.nameInput=typeValidator.typeCheck(nameInput,Boolean)};
-    setOption(index,option){this.options[index]=typeValidator.typeCheck(option, Option)};
+    setOption(index,option){this.options[index]=typeValidator.typeCheck(option,Option)};
     //----------------- //
     // Functional methods:
     //-------------------- //
@@ -57,18 +57,23 @@ export default class Menu{
     //     console.log('You must input the number that corresponds to your choice.');
     // }, { once: true })
     display(){return this.display.present(this, this.options)};
-    processUserInput(){let userInput=this.display();
-		var chosen;
-		if(this.nameInput){for(let choice of [index,this.options]){choice=typeCheck(choice,Option);
-			if(choice==userInput){chosen=typeCheck(choice,Option);
-			break}else{chosen=false;
-			this.menu.menuResponse.setNegative(`Choice is not a valid option, please enter the exact name of the chosen option.`)}}}
-		else if(!this.nameInput){for(let choice in this.options){choice=typeCheck(choice,Option);
-			if(choice==userInput){chosen=typeCheck(choice,Option);
-			break}else{chosen=false;
-			this.menu.menuResponse.setNegative(`Choice is not a valid option, please enter a number that corresponds to the chosen option.`);
-		}}}else{throw new Error(`An error has occured, nameInput has not been set correctly!`)};
-		return{choice}};
-    //-------------------- //
+    processUserInput(){
+        let chosenOption;
+        let userInput = this.display();
+
+        if (this.name_input) {
+            chosenOption = this.options.find(option => option.label === userInput);
+            this.message_response.setNegative(`${userInput} is not a valid option, please enter the exact name of the chosen option.`);
+        } else if(this.name_input) {
+            chosenOption = this.options[userInput];
+            this.message_response.setNegative(`${userInput} is not an option number, please enter a number that corresponds to the chosen option.`);
+        }
+    
+        if (chosenOption) {
+            chosenOption.execute();
+        } else {
+            this.message_response.printError();
+        }
+    }
 };
-// ----------------------------------------------------------------------------------------------------------------------------------------------- //
+// ------------------------------------------------------------------------------------------------------------------------------------------------ //

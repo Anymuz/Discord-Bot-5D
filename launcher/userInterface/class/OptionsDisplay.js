@@ -1,10 +1,10 @@
 // CLASS OptionsDisplay: Controls the way in which options are presented.
 
-import typeCheck, { typeCheckArray } from "../internal/type-validation";
+import Option from 'anymuz-interaction/Option';
 import typeValidator from '#internal/type-validation';
 
 // ---------------------------------------------------------------------
-export class OptionsDisplay {
+export default class OptionsDisplay {
     // Constructor method: 
     // ------------------- //
     constructor(newline = true,seperator = "|",splitter = ':',start=null){
@@ -32,9 +32,9 @@ export class OptionsDisplay {
     #setFormat(splitter){this.splitter=typeValidator.typeCheck(splitter,String)};
     // METHOD displayOptions: Is given the options by a Menu object and displays them to the console.
     // --------------------------------------------------------------------------------------------//
-    displayOptions(menuOptions,nameInput){
-        menuOptions = typeValidator.typeCheckArray(menuOptions, Option);
-        nameInput = typeValidator.typeCheck(nameInput, Boolean);
+    displayOptions(menu){
+        menu.options = typeValidator.typeCheckArray(menu.options, Option);
+        menu.nameInput = typeValidator.typeCheck(menu.nameInput, Boolean);
         const display_options = menuOptions.map((option, index) => {return nameInput?`${option.label}`:`${index}${this.splitter} ${option.label}`});
         if (this.newline) {display_options.forEach(option => console.log(option))} 
         else if(!this.newline) {console.log(display_options.join(` ${this.seperator} `))}

@@ -14,8 +14,8 @@ export class InterfaceResponse {
 // ---------------------------------------------------------------------------------- //
 // IHERITED CLASSES:
 // ----------------- //
-// CLASS  ExecutionResponse: Execution options must contain a positive and negativee response.
-// ------------------------------------------------------------------------------------------- //
+// CLASS  ExecutionResponse: Execution options must contain a positive and negative response.
+// ------------------------------------------------------------------------------------------ //
 export class ExecutionResponse extends InterfaceResponse {
     constructor(sucessMessage,errorMessage){
         this.positive=sucessMessage;
@@ -24,7 +24,7 @@ export class ExecutionResponse extends InterfaceResponse {
     print(functioName){console.log(`${functioName}: ${this.sucessMessage}`)};
     printErr(functioName){console.log(`ERROR ${functioName}: ${this.errorMessage}`)};
 };
-// ------------------------------------------------------------------------------------------ //
+// ----------------------------------------------------------------------------------------- //
 // CLASS  MenuResponse: Each menu has to be assigned at least one negative response for input error.
 // ------------------------------------------------------------------------------------------------- //
 export class MenuResponse extends InterfaceResponse {

@@ -1,10 +1,17 @@
+import Display from "anymuz-interaction/Display"
 import Menu from "anymuz-interaction/Menu";
-import { OptionsDisplay } from "anymuz-interaction/OptionsDisplay";
+import OptionsDisplay from "anymuz-interaction/OptionsDisplay";
 import typeValidator from '#internal/type-validation';
 import stringOperation from '#internal/string-operations'
 
+import { ExecutionResponse, MenuResponse, ReplyResponse } from 'anymuz-interaction/InterfaceResponse';
+import { Option } from 'anymuz-interaction/Option';
+import { Display } from 'anymuz-interaction/Display'
+import { Menu } from 'anymuz-interaction/Menu'
+import { OptionsDisplay } from 'anymuz-interaction/OptionsDisplay'
+
 // CLASS Display: Handles displaying the menu to the user.
-// -----------------------------------------------------//
+// ------------------------------------------------------- //
 export class Display {
     constructor(heading,text,encasing='[]',fillChar='-',lineLength=64, optionsDisplay){
 		this.base_heading=``;
@@ -35,25 +42,25 @@ export class Display {
 		menu = typeValidator.typeCheck(menu,Menu);
 		this.#setPrompt(menu);
 		this.displayHeading();
-		this.options_display.displayOptions(menu, options);
+		this.options_display.displayOptions();
 		let userInput = this.#processUserInput(menu);
 		return userInput};
 	//setMenu(menu){this.menu=typeCheck(menu,Menu)};
-	#processUserInput(menu){let userInput=this.#showPrompt(callback=>{return callback}); //redo
+	#processUserInput(menu){let user_input=this.#showPrompt(callback=>{return callback}); //redo
 		let chosen;
-		if(menu.nameInput){for(let choice of [index,menu.options]){choice=typeValidator.typeCheck(choice,Option);
-			if(choice==userInput){chosen=typeValidator.typeCheck(choice,Option);
+		if(menu.name_input){for(let choice of [index,menu.options]){choice=typeValidator.typeCheck(choice,Option);
+			if(choice==user_input){chosen=typeValidator.typeCheck(choice,Option);
 				return{choice}}else{chosen=false;
 			this.menu.menuResponse.setNegative(`${choice} is not a valid option, please enter the exact name of the chosen option.`)}}}
-		else if(!menu.nameInput){for(let choice in this.options){choice=typeValidator.typeCheck(choice,Option)
-			if(choice==userInput){chosen=typeValidator.typeCheck(choice,Option);
+		else if(!menu.name_input){for(let choice in this.options){choice=typeValidator.typeCheck(choice,Option)
+			if(choice==user_input){chosen=typeValidator.typeCheck(choice,Option);
 				return{choice}}else{chosen=false;
 			this.menu.menuResponse.setNegative(`${choice} is not a valid option, please enter a number that corresponds to the chosen option.`);
 		}}}else{throw new Error(`An error has occured, nameInput has not been set correctly!`)}};
 	// ----------------//
 	#setPrompt(menu){menu=typeValidator.typeCheck(menu,Menu);
-		if (menu.nameInput){this.prompt=`Please input answer: `}
-        else if(!menu.nameInput){this.prompt=`Please input corresponding number: `}
+		if (menu.name_input){this.prompt=`Please input answer: `}
+        else if(!menu.name_input){this.prompt=`Please input corresponding number: `}
         else{throw new Error(`An error has occured, nameInput has not be set correctly!`)}};
 
 	#showPrompt(callback){this.userInterface.question(this.prompt,(userInput)=>{callback(userInput)})};
@@ -65,29 +72,29 @@ export class Display {
 			const base_heading=stringOperation.padString(this.line_size,this.filler,this.heading,this.encasing)
 			console.log(base_heading)}};	
 };
-// -----------------------------------------------------//
+// ------------------------------------------------------- //
 
-const mainMenuDisplay = {
-	heading: "---------[Bot Launch Controller]---------",
-	text: `
-		Use this to activate the bots, remember to use deploy if commands are new or changed. You can input -1 at any time to return to this menu.\n
-		There will be additional features coming soon.
-	`,
-	options: [
-		"Deploy Bot Commands",
-		"Launch Bot",
-		"Generate Bot",
-		"Generate Command",
-		"Command Packages"
-	],
-	display: {
-		start: "",
-	//	main: `| ${index}: ${option}`,
-		end: "|"
-	},
-	responses: {
-		correct: null,
-		incorrect: `Please input the number that represents your selection`
-	},
-	execution: null
-};
+// const mainMenuDisplay = {
+// 	heading: "---------[Bot Launch Controller]---------",
+// 	text: `
+// 		Use this to activate the bots, remember to use deploy if commands are new or changed. You can input -1 at any time to return to this menu.\n
+// 		There will be additional features coming soon.
+// 	`,
+// 	options: [
+// 		"Deploy Bot Commands",
+// 		"Launch Bot",
+// 		"Generate Bot",
+// 		"Generate Command",
+// 		"Command Packages"
+// 	],
+// 	display: {
+// 		start: "",
+// 	//	main: `| ${index}: ${option}`,
+// 		end: "|"
+// 	},
+// 	responses: {
+// 		correct: null,
+// 		incorrect: `Please input the number that represents your selection`
+// 	},
+// 	execution: null
+// };
