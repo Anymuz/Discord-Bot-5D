@@ -28,7 +28,7 @@ export const oddLength=(string)=>{if(TypeValidation.typeCheck(string,String).len
 /*  padString: Takes a string, desired length and padding character aswell as optional casing string and returns the string with 
     the padding and casing of the specified length: */
 // ----------------------------------------------------------------------------------------------------------------------------- //
-export const padString=(length,padChar,title,encasing="[]")=>{length=TypeValidation.numberCheck(length,TypeValidation.type_integer)-2;      
+export const padString=(length,padChar,title,encasing="[]")=>{length=TypeValidation.numberCheck(length,TypeValidation.type_integer);      
     padChar=TypeValidation.stringCheck(padChar,1);                              
     title=TypeValidation.typeCheck(title,String);                                  
     encasing=TypeValidation.stringCheck(encasing,2);                

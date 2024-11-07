@@ -44,10 +44,10 @@ export default class Display {
     // Functional Methods:
     // ------------------- //
 	// Method displayHeading(encasing,filler) - Formats and outputs the heading as the menu title:
-	displayHeading(encasing=this.encasing,filler=this.filler){if(encasing!=this.encasing||filler!=this.filler){this.encasing=TypeValidator.stringCheck(encasing,2);
-		this.filler=TypeValidator.stringCheck(filler);
+	displayHeading(encasing=this.encasing,filler=this.filler){this.encasing=TypeValidator.stringCheck(encasing,2);
+		this.filler=TypeValidator.stringCheck(filler,1);
 		const base_heading=StringOperation.padString(this.line_size,this.filler,this.heading,this.encasing)
-		console.log(base_heading)}};
+		console.log(base_heading)};
 	// Method present(menu, options) - Displays the Menu object passed in as parameter:	
     async present(menu){menu=TypeValidator.typeCheck(menu,Menu);
 		this.#setPrompt(menu);

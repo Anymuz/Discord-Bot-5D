@@ -18,13 +18,13 @@ import TypeValidator from '#internal/TypeValidation';
 export default class Menu {
     // Constructor Method:
 	// ------------------- //
-    constructor(display, options, userInterface = null, nameInput = false) {this.AbortControl=new AbortController(),
+    constructor(display, options, nameInput = false) {this.AbortControl=new AbortController(),
         this.Display=TypeValidator.typeCheck(display,Display),
         this.MessageResponse=new AbstractResponse.MenuResponse(),
         this.name_input=TypeValidator.typeCheck(nameInput,Boolean),
         this.Options=TypeValidator.typeCheck(options,OptionsArray),
         this.target=this.AbortControl.signal,
-        this.UserInterface=TypeValidator.typeCheck(userInterface, ReadLine.Interface) || new ReadLine.createInterface({input:process.stdin,output:process.stdout})};
+        this.UserInterface=new ReadLine.createInterface({input:process.stdin,output:process.stdout})};
     // ------------------- //
     // Utility Methods:
     //----------------- //
@@ -57,6 +57,10 @@ export default class Menu {
             throw new Error(`Error in Menu object, name_input has not be correctly set (Must be True or False).`)};
             if(chosenOption){
                 chosenOption.execute()}else{this.MessageResponse.printError()
-        }}};
+        }};
+    async start(){
+        this.processUserInput(await this.display());
+        this.UserInterface.close();
+    }};
     //-------------------- //
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //

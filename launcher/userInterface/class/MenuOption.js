@@ -15,15 +15,15 @@ export default class MenuOption {
             else{this.redirection=TypeValidator.typeCheck(targetMenu,Menu);
             this.response=TypeValidator.typeCheck(response,AbstractResponse.ReplyResponse)}};
     
-    execute(){
+    async execute(){
         if (this.type==='execution'&&this.action) {
             this.response.setPositive('Action executed successfully');
             this.action();
-            this.response.print();
+            this.response.print(this.label);
         } else if (this.type==='redirection'&&this.redirection) {
             this.response.setPositive('Redirecting...');
             this.response.print();
-            this.targetMenu.display();
+            await this.targetMenu.start();
         } else {
             this.response.setNegative('Invalid option type or missing target.');
             this.response.printError();

@@ -9,7 +9,6 @@ import TypeValidatior from "#internal/TypeValidation";
 
 const { ExecutionResponse, MenuResponse, ReplyResponse } = AbstractResponse;
 
-// Export everything directly
 export {
     Display,
     ExecutionResponse,
@@ -23,7 +22,6 @@ export {
     TypeValidatior
 };
 
-// Optionally, export everything as default (for single import access)
 export default {
     Display,
     ExecutionResponse,

@@ -6,12 +6,14 @@ import StringOperation from "#internal/StringOperation";
 const NUMBER_TYPES=['int','float'];
 const invalidTypeMessage=(value,object)=>{return`Invalid Type: ${value} must be a ${object}.`};
 const invalidParameterMessage=(parameter,message)=>{return`Invalid Parameter: ${parameter}. ${message}`};
-const numberType=(value)=>{value=typeCheck(value,Number); 
-    return Number.isInteger(value)?NUMBER_TYPES[0]:NUMBER_TYPES[1]};
+
+const numberType = (value) => {value=typeCheck(value, Number); 
+    return Number.isInteger(value)? NUMBER_TYPES[0]:NUMBER_TYPES[1]};
 // ----------------------------------------------------------- //
 // Exported Functions for use in package: 
 // -------------------------------------- //
-export const stringCheck=(string, length)=>{if(StringOperation.checkLength(typeCheck(string,String),length)){return string}
+export const stringCheck=(string, length)=>{
+    if(StringOperation.checkLength(typeCheck(string,String),length)){return string}
     else{throw new Error(invalidParameterMessage(string,`Please specify only a ${length} character string for this function.`))}};
 export const type_integer=NUMBER_TYPES[0];
 export const type_float=NUMBER_TYPES[1];

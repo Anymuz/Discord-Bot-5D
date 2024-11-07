@@ -3,10 +3,10 @@ import ReadLine from 'readline';
 import AnymuzInterface from 'anymuz-interaction';
 
 // Mock readline interface for simulating user input
-const userReadLine = ReadLine.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-});
+// const userReadLine = ReadLine.createInterface({
+//     input: process.stdin,
+//     output: process.stdout,
+// });
 
 // OptionsDisplay configuration
 const optionsDisplay = new AnymuzInterface.OptionsDisplay(true, "|", ":");
@@ -16,7 +16,7 @@ const mainMenuDisplay = new AnymuzInterface.Display('Main Menu', optionsDisplay)
 const subMenuDisplay = new AnymuzInterface.Display('Submenu', optionsDisplay);
 
 // Define response instances
-const successResponse = new AnymuzInterface.AbstractResponse.ExecutionResponse('Option executed successfully!', 'Execution failed.');
+const successResponse = new AnymuzInterface.ExecutionResponse('Option executed successfully!', 'Execution failed.');
 const redirectionResponse = new AnymuzInterface.ReplyResponse('Redirecting to submenu...');
 const menuErrorResponse = new AnymuzInterface.MenuResponse('Invalid choice. Please try again.');
 
@@ -25,8 +25,8 @@ const subMenuOptions = new AnymuzInterface.OptionsArray();
 const mainMenuOptions = new AnymuzInterface.OptionsArray();
 
 // Create main and submenus
-const mainMenu = new AnymuzInterface.Menu(mainMenuDisplay,mainMenuOptions,userReadLine);
-const subMenu = new AnymuzInterface.Menu(subMenuDisplay,subMenuOptions,userReadLine,true);
+const mainMenu = new AnymuzInterface.Menu(mainMenuDisplay,mainMenuOptions);
+const subMenu = new AnymuzInterface.Menu(subMenuDisplay,subMenuOptions,true);
 
 // Define options for the submenu
 subMenuOptions.push(new AnymuzInterface.MenuOption('Back to Main Menu','redirection', redirectionResponse, null, mainMenu));
@@ -69,14 +69,20 @@ subMenuOptions[0].targetMenu = mainMenu; // "Back to Main Menu" redirects to mai
 // let answer = await mainMenu.display();
 // mainMenu.processUserInput(answer);
 
-mainMenu.processUserInput('0');
-mainMenu.processUserInput('1');
-mainMenu.processUserInput('3');
-subMenu.processUserInput('0');
-subMenu.processUserInput('1');
-subMenu.processUserInput('5');
+// mainMenu.processUserInput('0');
+// mainMenu.processUserInput('1');
+// mainMenu.processUserInput('3');
+// subMenu.processUserInput('0');
+// subMenu.processUserInput('1');
+// subMenu.processUserInput('5');
 
-userReadLine.close();
+// console.log(subMenuDisplay.getEncasing());
+// console.log(subMenuDisplay.present(subMenu));
+// userReadLine.close();
+// let input = await mainMenu.display();
+// mainMenu.processUserInput(input)
+await mainMenu.start();
+//userReadLine.close();
 
 
 
