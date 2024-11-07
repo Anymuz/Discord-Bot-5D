@@ -2,7 +2,7 @@
 import ReadLine from 'readline';
 import AnymuzInterface from 'anymuz-interaction';
 
-// Mock readline interface for simulating user input
+// Mock readline interface for user input
 const userReadLine = ReadLine.createInterface({
     input: process.stdin,
     output: process.stdout,
