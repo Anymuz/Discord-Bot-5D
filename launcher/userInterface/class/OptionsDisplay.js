@@ -9,7 +9,7 @@ import TypeValidator from '#internal/TypeValidation';
 export default class OptionsDisplay {
     // Constructor method: 
     // ------------------- //
-    constructor(newline=true,seperator="|",splitter=':',start=``){this.end=``,
+    constructor(seperator="|",splitter=':',start=``,newline=true){this.end=``,
         this.new_line=TypeValidator.typeCheck(newline,Boolean),
         this.seperator=TypeValidator.typeCheck(seperator,String),this.splitter=TypeValidator.typeCheck(splitter,String),this.start=TypeValidator.typeCheck(start,String)||``};
     // ------------------- //

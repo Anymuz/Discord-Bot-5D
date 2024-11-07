@@ -3,13 +3,13 @@ import ReadLine from 'readline';
 import AnymuzInterface from 'anymuz-interaction';
 
 // Mock readline interface for simulating user input
-// const userReadLine = ReadLine.createInterface({
-//     input: process.stdin,
-//     output: process.stdout,
-// });
+const userReadLine = ReadLine.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+});
 
 // OptionsDisplay configuration
-const optionsDisplay = new AnymuzInterface.OptionsDisplay(true, "|", ":");
+const optionsDisplay = new AnymuzInterface.OptionsDisplay("|",":",``,true);
 
 // Create display instances
 const mainMenuDisplay = new AnymuzInterface.Display('Main Menu', optionsDisplay);
@@ -25,16 +25,22 @@ const subMenuOptions = new AnymuzInterface.OptionsArray();
 const mainMenuOptions = new AnymuzInterface.OptionsArray();
 
 // Create main and submenus
-const mainMenu = new AnymuzInterface.Menu(mainMenuDisplay,mainMenuOptions);
-const subMenu = new AnymuzInterface.Menu(subMenuDisplay,subMenuOptions,true);
+const mainMenu = new AnymuzInterface.Menu(mainMenuDisplay,mainMenuOptions,userReadLine);
+const subMenu = new AnymuzInterface.Menu(subMenuDisplay,subMenuOptions,userReadLine,true);
 
 // Define options for the submenu
-subMenuOptions.push(new AnymuzInterface.MenuOption('Back to Main Menu','redirection', redirectionResponse, null, mainMenu));
-subMenuOptions.push(new AnymuzInterface.MenuOption('Print Date','execution', successResponse,()=>console.log(new Date().toLocaleDateString())));
+subMenuOptions.push(new AnymuzInterface.MenuOption(
+    'Back to Main Menu',
+    'redirection', 
+    redirectionResponse, 
+    mainMenu,
+    null
+));
+subMenuOptions.push(new AnymuzInterface.MenuOption('Print Date','execution', successResponse,mainMenu,()=>console.log(new Date().toLocaleDateString())));
 
 // Define options for the main menu
-mainMenuOptions.push(new AnymuzInterface.MenuOption('Say Hello','execution', successResponse,()=>console.log('Hello!')));
-mainMenuOptions.push(new AnymuzInterface.MenuOption('Go to Submenu','redirection', redirectionResponse,null,subMenu));
+mainMenuOptions.push(new AnymuzInterface.MenuOption('Say Hello','execution', successResponse,mainMenu,()=>console.log('Hello!')));
+mainMenuOptions.push(new AnymuzInterface.MenuOption('Go to Submenu','redirection',redirectionResponse,subMenu,null));
 
 // Link options to their respective menus
 mainMenuOptions[1].targetMenu = subMenu; // "Go to Submenu" redirects to submenu

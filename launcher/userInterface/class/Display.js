@@ -4,19 +4,18 @@ import Menu from 'anymuz-interaction/Menu';
 import OptionsDisplay from 'anymuz-interaction/OptionsDisplay';
 import StringOperation from '#internal/StringOperation';
 import TypeValidator from '#internal/TypeValidation';
-import readline from 'readline';
 //---------------- //
 // CLASS Display: Handles displaying the menu to the user.
 // ------------------------------------------------------- //
-export default class Display {
+export default class Display{
 	// Constructor Method:
 	// ------------------- //
-    constructor(heading,optionsDisplay,encasing='[]',fillChar='-',lineLength=64){this.encasing=TypeValidator.stringCheck(encasing,2);
-		this.filler=TypeValidator.stringCheck(fillChar,1);	
-        this.heading=TypeValidator.typeCheck(heading,String);
-		this.line_size=TypeValidator.numberCheck(lineLength,TypeValidator.type_integer);
-		this.line_spacer=StringOperation.charEvenString(this.line_size,this.filler);
-		this.OptionsDisplay=TypeValidator.typeCheck(optionsDisplay,OptionsDisplay);
+    constructor(heading,optionsDisplay,encasing='[]',fillChar='-',lineLength=64){this.encasing=TypeValidator.stringCheck(encasing,2),
+		this.filler=TypeValidator.stringCheck(fillChar,1),	
+        this.heading=TypeValidator.typeCheck(heading,String),
+		this.line_size=TypeValidator.numberCheck(lineLength,TypeValidator.type_integer),
+		this.line_spacer=StringOperation.charEvenString(this.line_size,this.filler),
+		this.OptionsDisplay=TypeValidator.typeCheck(optionsDisplay,OptionsDisplay),
 		this.prompt=``};
 	// ------------------- //
     // Utility Methods:
@@ -38,7 +37,8 @@ export default class Display {
 		else if(!menu.name_input){this.prompt=`Please input corresponding number: `}
 		else{throw new Error(`An error has occured, nameInput has not be set correctly!`)}};
 	// Method showPrompt() - Use readline to prompt user input:
-	#showPrompt(menu){return new Promise((resolve)=>{menu.UserInterface.question(this.prompt,(userInput)=>{resolve(userInput)})})};
+	#showPrompt(menu){return new Promise((resolve)=>{let target = menu.target;
+		menu.UserInterface.question(this.prompt,{target},(userInput)=>{resolve(userInput)})})};
 	//#showPrompt(menu){menu.UserInterface.question(this.prompt,(userInput)=>{userInput})};
 	// ----------------- //
     // Functional Methods:
