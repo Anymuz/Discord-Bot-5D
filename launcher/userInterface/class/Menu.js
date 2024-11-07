@@ -2,7 +2,7 @@
 //---------------- //
 import AbstractResponse from 'anymuz-interaction/AbstractResponse';
 import Display from 'anymuz-interaction/Display';
-import Option from 'anymuz-interaction/Option';
+import MenuOption from 'anymuz-interaction/MenuOption';
 import OptionsArray from 'anymuz-interaction/OptionsArray';
 import ReadLine from 'readline';
 import TypeValidator from '#internal/TypeValidation';
@@ -18,9 +18,13 @@ import TypeValidator from '#internal/TypeValidation';
 export default class Menu {
     // Constructor Method:
 	// ------------------- //
-    constructor(display, options, nameInput = false) {this.AbortControl=new AbortController(),this.Display=TypeValidator.typeCheck(display,Display),
-        this.MessageResponse=new AbstractResponse.MenuResponse(),this.name_input=TypeValidator.typeCheck(nameInput,Boolean),this.Options=TypeValidator.typeCheck(options,OptionsArray),
-        this.target=AbortControl.signal,this.UserInterface=new ReadLine.createInterface({input:process.stdin,output:process.stdout})};
+    constructor(display, options, userInterface = null, nameInput = false) {this.AbortControl=new AbortController(),
+        this.Display=TypeValidator.typeCheck(display,Display),
+        this.MessageResponse=new AbstractResponse.MenuResponse(),
+        this.name_input=TypeValidator.typeCheck(nameInput,Boolean),
+        this.Options=TypeValidator.typeCheck(options,OptionsArray),
+        this.target=this.AbortControl.signal,
+        this.UserInterface=TypeValidator.typeCheck(userInterface, ReadLine.Interface) || new ReadLine.createInterface({input:process.stdin,output:process.stdout})};
     // ------------------- //
     // Utility Methods:
     //----------------- //
@@ -31,21 +35,28 @@ export default class Menu {
     removeOption(index){delete this.Options[index]};
     setAllOptions(options){this.Options=TypeValidator.typeCheck(options,OptionsArray)};
     setNameInput(nameInput){this.name_input=TypeValidator.typeCheck(nameInput,Boolean)};
-    setOption(index,option){this.Options[index]=TypeValidator.typeCheck(option,Option)};
+    setOption(index,option){this.Options[index]=TypeValidator.typeCheck(option,MenuOption)};
     //----------------- //
     // Functional methods:
     //-------------------- //
     // Method display() - Calls on it's display to show itself to the user, returns the users input:
-    display(){return this.display.present(this,this.options)};
+    async display(){return await this.Display.present(this)};
     // Method processUserInput() - Processes the user input returned from the Display:
-    processUserInput(){
+    processUserInput(userInput){
         let chosenOption;
-        let user_input=this.display();
-        if(this.name_input){chosenOption=this.options.find(option=>option.label===user_input);
-            this.MessageResponse.setNegative(`${user_input} is not a valid option, please enter the exact name of the chosen option.`)}
-        else if(!this.name_input){chosenOption=this.options[user_input];
-            this.MessageResponse.setNegative(`${user_input} is not an option number, please enter a number that corresponds to the chosen option.`)}
-        else{throw new Error(`Error in Menu object, name_input has not be correctly set (Must be True or False).`)};
-        if(chosenOption){chosenOption.execute()}else{this.MessageResponse.printError()}}};
+        if(this.name_input){
+            chosenOption=this.Options.find(option=>option.label===userInput);
+            this.MessageResponse.setNegative(`${userInput} is not a valid option, please enter the exact name of the chosen option.`)
+        }
+        else if(!this.name_input){
+            let chosenIndex = parseInt(userInput, 10);
+            chosenOption=this.Options[chosenIndex];
+            this.MessageResponse.setNegative(`${userInput} is not an option number, please enter a number that corresponds to the chosen option.`)
+        }
+        else{
+            throw new Error(`Error in Menu object, name_input has not be correctly set (Must be True or False).`)};
+            if(chosenOption){
+                chosenOption.execute()}else{this.MessageResponse.printError()
+        }}};
     //-------------------- //
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //

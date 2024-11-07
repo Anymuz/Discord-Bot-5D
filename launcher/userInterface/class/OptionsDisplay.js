@@ -6,10 +6,11 @@ import TypeValidator from '#internal/TypeValidation';
 //---------------- //
 // CLASS OptionsDisplay: Controls the way in which options are presented.
 // ---------------------------------------------------------------------- //
-export default class OptionsDisplay{
+export default class OptionsDisplay {
     // Constructor method: 
     // ------------------- //
-    constructor(newline=true,seperator="|",splitter=':',start=null){this.end=``,this.newline=TypeValidator.typeCheck(newline,Boolean),
+    constructor(newline=true,seperator="|",splitter=':',start=``){this.end=``,
+        this.new_line=TypeValidator.typeCheck(newline,Boolean),
         this.seperator=TypeValidator.typeCheck(seperator,String),this.splitter=TypeValidator.typeCheck(splitter,String),this.start=TypeValidator.typeCheck(start,String)||``};
     // ------------------- //
     // Utility Methods:
@@ -26,10 +27,10 @@ export default class OptionsDisplay{
     // METHOD displayOptions(Menu) - Is given the options by a Menu object and displays them to the console:
     // ----------------------------------------------------------------------------------------------------- //
     displayOptions(menu){
-        menu=TypeValidator.typeCheck(menu, Menu)
-        menu.options=TypeValidator.typeCheck(menu.options,OptionsArray);
+        menu=TypeValidator.typeCheck(menu,Menu)
+        menu.Options=TypeValidator.typeCheck(menu.Options,OptionsArray);
         menu.name_input=TypeValidator.typeCheck(menu.name_input,Boolean);
-        const display_options=menuOptions.map((option,index)=>{return nameInput?`${option.label}`:`${index}${this.splitter} ${option.label}`});
+        const display_options=menu.Options.map((option,index)=>{return menu.name_input?`${option.label}`:`${index}${this.splitter} ${option.label}`});
         if (this.newline){display_options.forEach(option=>console.log(option))} 
         else if(!this.newline){console.log(display_options.join(` ${this.seperator} `))}
         else {throw new Error(`An error has occured from Menu: nameInput has not been set correctly!`)}}};

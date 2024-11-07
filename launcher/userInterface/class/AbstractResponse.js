@@ -22,18 +22,18 @@ export class InterfaceResponse {
 // CLASS  ExecutionResponse: Execution options must contain a positive and negative response.
 // ------------------------------------------------------------------------------------------ //
 export class ExecutionResponse extends InterfaceResponse {
-    constructor(sucessMessage,errorMessage){this.positive=TypeValidator.typeCheck(sucessMessage,String),this.negative=TypeValidator.typeCheck(errorMessage,String)};
+    constructor(sucessMessage,errorMessage){super(),this.positive=TypeValidator.typeCheck(sucessMessage,String),this.negative=TypeValidator.typeCheck(errorMessage,String)};
     print(functioName){console.log(`${functioName}: ${this.sucessMessage}`)};
     printErr(functioName){console.log(`ERROR ${functioName}: ${this.errorMessage}`)}};
 // ----------------------------------------------------------------------------------------- //
 // CLASS  MenuResponse: Each menu has to be assigned at least one negative response for input error.
 // ------------------------------------------------------------------------------------------------- //
-export class MenuResponse extends InterfaceResponse {constructor(errorMessage=`Error!`){this.negative=TypeValidator.typeCheck(errorMessage,String)};
+export class MenuResponse extends InterfaceResponse {constructor(errorMessage=`Error!`){super(),this.negative=TypeValidator.typeCheck(errorMessage,String)};
     printError(){console.log(this.negative)}};
 // ------------------------------------------------------------------------------------------------- //
 // CLASS  ReplyResponse: A redirect option must contain a replyResponse to it being set.
 // ------------------------------------------------------------------------------------- //
-export class ReplyResponse extends InterfaceResponse {constructor(responseMessage){this.positive=TypeValidator.typeCheck(responseMessage,String)};
+export class ReplyResponse extends InterfaceResponse {constructor(responseMessage){super(),this.positive=TypeValidator.typeCheck(responseMessage,String)};
     print(){console.log(this.positive)}};
 // ------------------------------------------------------------------------------------- //
 // ----------------- //

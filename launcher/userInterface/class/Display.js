@@ -1,24 +1,23 @@
 // Import Modules:
 //---------------- //
-import Display from "anymuz-interaction/Display"
-import Menu from "anymuz-interaction/Menu";
-import OptionsDisplay from "anymuz-interaction/OptionsDisplay";
+import Menu from 'anymuz-interaction/Menu';
+import OptionsDisplay from 'anymuz-interaction/OptionsDisplay';
 import StringOperation from '#internal/StringOperation';
 import TypeValidator from '#internal/TypeValidation';
+import readline from 'readline';
 //---------------- //
 // CLASS Display: Handles displaying the menu to the user.
 // ------------------------------------------------------- //
 export default class Display {
 	// Constructor Method:
 	// ------------------- //
-    constructor(heading,text,encasing='[]',fillChar='-',lineLength=64,optionsDisplay){this.encasing=TypeValidator.stringCheck(encasing,2);
+    constructor(heading,optionsDisplay,encasing='[]',fillChar='-',lineLength=64){this.encasing=TypeValidator.stringCheck(encasing,2);
 		this.filler=TypeValidator.stringCheck(fillChar,1);	
         this.heading=TypeValidator.typeCheck(heading,String);
 		this.line_size=TypeValidator.numberCheck(lineLength,TypeValidator.type_integer);
 		this.line_spacer=StringOperation.charEvenString(this.line_size,this.filler);
 		this.OptionsDisplay=TypeValidator.typeCheck(optionsDisplay,OptionsDisplay);
-		this.prompt=``;
-		this.text=TypeValidator.typeCheck(text,String)};
+		this.prompt=``};
 	// ------------------- //
     // Utility Methods:
     // ---------------- //
@@ -39,21 +38,22 @@ export default class Display {
 		else if(!menu.name_input){this.prompt=`Please input corresponding number: `}
 		else{throw new Error(`An error has occured, nameInput has not be set correctly!`)}};
 	// Method showPrompt() - Use readline to prompt user input:
-	#showPrompt(){return this.userInterface.question(this.prompt,(userInput)=>{callback(userInput)})};
+	#showPrompt(menu){return new Promise((resolve)=>{menu.UserInterface.question(this.prompt,(userInput)=>{resolve(userInput)})})};
+	//#showPrompt(menu){menu.UserInterface.question(this.prompt,(userInput)=>{userInput})};
 	// ----------------- //
     // Functional Methods:
     // ------------------- //
 	// Method displayHeading(encasing,filler) - Formats and outputs the heading as the menu title:
 	displayHeading(encasing=this.encasing,filler=this.filler){if(encasing!=this.encasing||filler!=this.filler){this.encasing=TypeValidator.stringCheck(encasing,2);
-			this.filler=TypeValidator.stringCheck(filler);
-			const base_heading=StringOperation.padString(this.line_size,this.filler,this.heading,this.encasing)
-			console.log(base_heading)}};
+		this.filler=TypeValidator.stringCheck(filler);
+		const base_heading=StringOperation.padString(this.line_size,this.filler,this.heading,this.encasing)
+		console.log(base_heading)}};
 	// Method present(menu, options) - Displays the Menu object passed in as parameter:	
-    present(menu){menu=TypeValidator.typeCheck(menu,Menu);
+    async present(menu){menu=TypeValidator.typeCheck(menu,Menu);
 		this.#setPrompt(menu);
 		this.displayHeading();
-		this.OptionsDisplay.displayOptions();
-		let userInput=this.#showPrompt();
+		this.OptionsDisplay.displayOptions(menu);
+		let userInput=await this.#showPrompt(menu);
 		return userInput};
 	// Method setOptionsDisplay(OptionsDisplay) - Assigns an OptionsDisplay object to this display:
 	setOptionsDisplay(optionsDisplay){this.optionsDisplay=TypeValidator.typeCheck(optionsDisplay,OptionsDisplay)}};
