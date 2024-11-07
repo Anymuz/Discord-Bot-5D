@@ -1,4 +1,120 @@
-import stringHandler from "./launcher/userInterface/internal/string-operations.js";
+// Import required modules and classes
+import ReadLine from 'readline';
+import AnymuzInterface from 'anymuz-interaction';
+
+// Mock readline interface for user input
+const userReadLine = ReadLine.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+});
+
+// OptionsDisplay configuration
+const optionsDisplay = new AnymuzInterface.OptionsDisplay("|",":",``,true);
+
+// Create display instances
+const mainMenuDisplay = new AnymuzInterface.Display('Main Menu', optionsDisplay);
+const subMenuDisplay = new AnymuzInterface.Display('Submenu', optionsDisplay);
+
+// Define response instances
+const successResponse = new AnymuzInterface.ExecutionResponse('Option executed successfully!', 'Execution failed.');
+const redirectionResponse = new AnymuzInterface.ReplyResponse('Redirecting to submenu...');
+const menuErrorResponse = new AnymuzInterface.MenuResponse('Invalid choice. Please try again.');
+
+// Define options for the menus first (empty initially)
+const subMenuOptions = new AnymuzInterface.OptionsArray();
+const mainMenuOptions = new AnymuzInterface.OptionsArray();
+
+// Create main and submenus
+const mainMenu = new AnymuzInterface.Menu(mainMenuDisplay,mainMenuOptions,userReadLine);
+const subMenu = new AnymuzInterface.Menu(subMenuDisplay,subMenuOptions,userReadLine,true);
+
+// Define options for the submenu
+subMenuOptions.push(new AnymuzInterface.MenuOption(
+    'Back to Main Menu',
+    'redirection', 
+    redirectionResponse, 
+    mainMenu,
+    null
+));
+subMenuOptions.push(new AnymuzInterface.MenuOption('Print Date','execution', successResponse,mainMenu,()=>console.log(new Date().toLocaleDateString())));
+
+// Define options for the main menu
+mainMenuOptions.push(new AnymuzInterface.MenuOption('Say Hello','execution', successResponse,mainMenu,()=>console.log('Hello!')));
+mainMenuOptions.push(new AnymuzInterface.MenuOption('Go to Submenu','redirection',redirectionResponse,subMenu,null));
+
+// Link options to their respective menus
+mainMenuOptions[1].targetMenu = subMenu; // "Go to Submenu" redirects to submenu
+subMenuOptions[0].targetMenu = mainMenu; // "Back to Main Menu" redirects to mainMenu
+
+// // Function to simulate user interaction for testing purposes
+// function simulateUserInput(menu, input) {
+//     console.log(`\n--- Testing menu: ${menu.Display.getHeading()} ---`);
+//     //menu.Display(); // Display the menu
+
+//     // Mock user input
+//     //userReadLine.question = (prompt, callback) => {
+//     //    console.log(prompt + input); // Simulate user input display
+//     //    callback(input); // Invoke callback with simulated input
+//     //};
+
+//     // Process the input within the menu
+//     menu.processUserInput();
+// }
+
+// // Test the main menu with valid and invalid inputs
+// simulateUserInput(mainMenu, '0'); // Should execute "Say Hello"
+// simulateUserInput(mainMenu, '1'); // Should redirect to "Submenu"
+// simulateUserInput(mainMenu, '3'); // Should print error for invalid choice
+
+// // Test the submenu
+// simulateUserInput(subMenu, '0'); // Should redirect back to main menu
+// simulateUserInput(subMenu, '1'); // Should execute "Print Date"
+// simulateUserInput(subMenu, '5'); // Should print error for invalid choice
+
+// Close readline after tests
+// let answer = await mainMenu.display();
+// mainMenu.processUserInput(answer);
+
+// mainMenu.processUserInput('0');
+// mainMenu.processUserInput('1');
+// mainMenu.processUserInput('3');
+// subMenu.processUserInput('0');
+// subMenu.processUserInput('1');
+// subMenu.processUserInput('5');
+
+// console.log(subMenuDisplay.getEncasing());
+// console.log(subMenuDisplay.present(subMenu));
+// userReadLine.close();
+// let input = await mainMenu.display();
+// mainMenu.processUserInput(input)
+await mainMenu.start();
+//userReadLine.close();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//import stringHandler from "./launcher/userInterface/internal/string-operations.js";
 
 // function padString(length, paddingChar, word, encloser) {
 //     // Input validation
@@ -40,14 +156,14 @@ import stringHandler from "./launcher/userInterface/internal/string-operations.j
 
 // Example usage:
 //console.log(padString(64, '+', "Anymuz", '{}'));
-console.log('++++++++++++++++++++++++++++{Anymuz}++++++++++++++++++++++++++++'.length)
-console.log(stringHandler.padString(64, '+', "Anymuz", '{}'));
-console.log('+++++++++++++++++++++++++++++{Anymuz}+++++++++++++++++++++++++++++'.length)
+// console.log('++++++++++++++++++++++++++++{Anymuz}++++++++++++++++++++++++++++'.length)
+// console.log(stringHandler.padString(64, '+', "Anymuz", '{}'));
+// console.log('+++++++++++++++++++++++++++++{Anymuz}+++++++++++++++++++++++++++++'.length)
 
-console.log(`20 per g means 1 ounce is: ${20*28}`);
-console.log(`That means 1KG which is ${1000/28} ounces`);
-console.log(`so 1KH would be ${(1000/28)*28*20}`)
-console.log(35.714*560)
+// console.log(`20 per g means 1 ounce is: ${20*28}`);
+// console.log(`That means 1KG which is ${1000/28} ounces`);
+// console.log(`so 1KH would be ${(1000/28)*28*20}`)
+// console.log(35.714*560)
 // console.log(stringHandler.padString(64, '-', "Shtokavin", '[]'));
 // let string_even =  'Anymuz', string_odd = 'Shtokavin';
 // console.log(`Even String: ${string_even}  |  Odd String: ${string_odd}`);
