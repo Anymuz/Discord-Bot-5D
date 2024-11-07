@@ -7,7 +7,7 @@ import OptionsDisplay from "anymuz-interaction/OptionsDisplay";
 import StringOperation from "#internal/StringOperation";
 import TypeValidatior from "#internal/TypeValidation";
 
-const { ExecutionResponse, MenuResponse, ReplyResponse } = AbstractResponse;
+const { ExecutionResponse, MenuResponse, RedirectResponse } = AbstractResponse;
 
 export {
     Display,
@@ -17,7 +17,7 @@ export {
     MenuOption,
     OptionsArray,
     OptionsDisplay,
-    ReplyResponse,
+    RedirectResponse,
     StringOperation,
     TypeValidatior
 };
@@ -30,7 +30,7 @@ export default {
     MenuOption,
     OptionsArray,
     OptionsDisplay,
-    ReplyResponse,
+    RedirectResponse,
     StringOperation,
     TypeValidatior
 };

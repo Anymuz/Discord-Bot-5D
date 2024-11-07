@@ -33,11 +33,11 @@ export class MenuResponse extends InterfaceResponse{constructor(errorMessage=`Er
 // ------------------------------------------------------------------------------------------------- //
 // CLASS  ReplyResponse: A redirect option must contain a replyResponse to it being set.
 // ------------------------------------------------------------------------------------- //
-export class ReplyResponse extends InterfaceResponse{constructor(responseMessage){super(),this.positive=TypeValidator.typeCheck(responseMessage,String)};
+export class RedirectResponse extends InterfaceResponse{constructor(responseMessage){super(),this.positive=TypeValidator.typeCheck(responseMessage,String)};
     print(){console.log(this.positive)}};
 // ------------------------------------------------------------------------------------- //
 // ----------------- //
 // Default export: Allows import of abstract InterfaceResponse as object to reference the inheritance classes.
 // ----------------------------------------------------------------------------------------------------------- //
-export default {ExecutionResponse,MenuResponse,ReplyResponse};
+export default {ExecutionResponse,MenuResponse,RedirectResponse};
 // ----------------------------------------------------------------------------------------------------------- //
