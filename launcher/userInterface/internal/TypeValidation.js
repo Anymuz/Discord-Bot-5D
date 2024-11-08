@@ -26,7 +26,7 @@ export const stringCheck=(string, length)=>{if(StringOperation.checkLength(typeC
 // ------------------------------------------------------------------------------------------------------------ //
 export const type_integer=NUMBER_TYPES[0];
 export const type_float=NUMBER_TYPES[1];
-// ------------------------------------------------------------------------------------------------- //
+// ------------------------------------------------------------------------------------------------------------ //
 // typeCheck: Ensures that a value is of the rihgt type or is an instance of the object
 // ------------------------------------------------------------------------------------ //
 export const typeCheck=(value,object)=>{if(object===Boolean||object===String||object===Number){if(typeof(value)!==object.name.toLowerCase())

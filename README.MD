@@ -36,14 +36,12 @@ Here's a basic overview of the repository structure:
 The bot is dynamic, commands can be written independently and then used by writing `commands/name.js` files where `name` is the name of your command. The same logic applies for event handlers, and bot message templates can also be used (upcoming).
 
 The main components of the project are as follows:
-
 - **`commands/`**: Holds individual command files. Each command is organized as its own module, making it easy to add, update, or remove commands without affecting the rest of the code.
 - **`events/`**: Contains event files that handle specific Discord.js events (e.g., message events). These files are triggered based on bot activity.
 - **`config/`**: Manages environment-based configurations, allowing different setups for development, testing, and production environments.
 - **`index.js`**: The main entry point. This file initializes the bot, loads commands, and listens for events.
 
 ## Installation
-
 1. **Clone the Repository**
    ```bash
    git clone https://github.com/Anymuz/Discord-Bot-5D.git
@@ -64,28 +62,24 @@ The main components of the project are as follows:
    Replace `<your-discord-token>` with your bot’s token and configure other settings as needed.
 
 ## Usage
-
 To start the bot:
 ```bash
 npm start
 ```
 
 ## Adding Commands
-
 To add a new command:
 1. Create a new file in the `commands/` folder.
 2. Export a function handling the logic for the command, following the existing command structure.
 3. The bot will automatically detect and load the command.
 
 ## Adding Events
-
 To add a new event handler:
 1. Create a new file in the `events/` folder.
 2. Export an event listener function.
 3. Link the event type (e.g., message, ready) to your function, and the bot will automatically register it.
 
 ## Example Commands
-
 Basic command examples include a `ping` command that checks bot responsiveness:
 ```js
 module.exports = {
@@ -98,14 +92,11 @@ module.exports = {
 ```
 
 ## Contributing
-
 Feel free to open issues and submit pull requests. Contributions to expand functionality or improve performance are welcome!
 
 ## Resources
-
 - [Discord.js Documentation](https://discord.js.org/#/docs)
 - [Node.js Documentation](https://nodejs.org/en/docs/)
 
 ---
-
 Enjoy building your modular Discord bot with this framework!
