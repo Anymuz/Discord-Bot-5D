@@ -2,7 +2,7 @@
 
 All notable changes to Anymuz Interface are documented in this file. Includes version, date of release, added features, changes and removed features.
 
-## Anymuz Interface [1.2.2] - 2024-11-10
+## Anymuz Interface [1.2.2] - 2024-11-11
 ### Added
 - Documented with `README.MD` the aspects of the Anymuz Interface package.
 - Created and added this `CHANGELOG.md`.

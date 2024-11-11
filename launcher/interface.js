@@ -27,7 +27,7 @@
 // Import Classes:
 // --------------- //
 import ReadLine from 'readline'; // remove
-import LauncherInterface, { MenuOption, OptionsArray } from 'anymuz-interface';
+import LauncherInterface from 'anymuz-interface';
 import { stdin } from 'process';
 // --------------- //
 const VERSION='1.0'
