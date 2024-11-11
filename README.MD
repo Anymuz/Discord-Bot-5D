@@ -92,7 +92,7 @@ module.exports = {
 ```
 
 ## Contributing
-Feel free to open issues and submit pull requests. Contributions to expand functionality or improve performance are welcome!
+Please contact Anymuz to  join the team.
 
 ## Resources
 - [Discord.js Documentation](https://discord.js.org/#/docs)
