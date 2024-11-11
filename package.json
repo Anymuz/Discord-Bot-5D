@@ -33,7 +33,6 @@
     "./server/*/config": "./servers/*/*.json",
     "./setup": "./launcher/setup/setup.js",
     "./setup/*": "./launcher/setup/*.js"
-
   },
   "imports": {
     "#bots/*": "./bots/*/bot.js",

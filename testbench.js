@@ -6,6 +6,7 @@
 // Import required modules and classes
 import ReadLine from 'readline';
 import Interface from '#launcher/interface';
+//import AnymuzInterface from 'anymuz-interface';
 
 const UserInterface = ReadLine.createInterface({
     input: process.stdin,
