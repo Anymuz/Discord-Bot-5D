@@ -215,8 +215,7 @@ The following classes offer various customization options:
 
 
 ## Contributing
-
-Contributions are welcome! Please see `CONTRIBUTING.md` for more details on our contribution guidelines.
+Please contact Anymuz to join the team.
 
 ## License
 This project is licensed under the ISC License. 
