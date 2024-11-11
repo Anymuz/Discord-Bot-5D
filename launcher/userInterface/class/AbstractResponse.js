@@ -31,9 +31,10 @@ export class ExecutionResponse extends InterfaceResponse{
 export class MenuResponse extends InterfaceResponse{constructor(errorMessage=`Error!`){super(),this.negative=TypeValidator.typeCheck(errorMessage,String)};
     printError(){console.log(this.negative)}};
 // ------------------------------------------------------------------------------------------------- //
-// CLASS  ReplyResponse: A redirect option must contain a replyResponse to it being set.
+// CLASS  RedirectResponse: A redirect option must contain a redirectResponse to it being set.
 // ------------------------------------------------------------------------------------- //
-export class RedirectResponse extends InterfaceResponse{constructor(responseMessage){super(),this.positive=TypeValidator.typeCheck(responseMessage,String)};
+export class RedirectResponse extends InterfaceResponse{constructor(responseMessage=null){super(),
+    this.positive= responseMessage ? TypeValidator.typeCheck(responseMessage,String):null};
     print(){console.log(this.positive)}};
 // ------------------------------------------------------------------------------------- //
 // ----------------- //

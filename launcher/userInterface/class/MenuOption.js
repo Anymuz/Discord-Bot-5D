@@ -17,7 +17,7 @@ export default class MenuOption{
         if(this.type==='execution'){this.action=TypeValidator.typeCheck(action,Function);
             this.response=TypeValidator.typeCheck(response,AbstractResponse.ExecutionResponse)}
         else{this.redirection=TypeValidator.typeCheck(targetMenu,Menu);
-            this.response=TypeValidator.typeCheck(response,AbstractResponse.ReplyResponse)}};
+            this.response=TypeValidator.typeCheck(response,AbstractResponse.RedirectResponse)}};
     // ------------------- //
     // Functional methods:
     //-------------------- //
@@ -26,7 +26,7 @@ export default class MenuOption{
             this.action();
             this.response.print(this.label)
             this.TargetMenu.start()}
-        else if(this.type==='redirection'&&this.redirection){this.response.setPositive('Redirecting.');
+        else if(this.type==='redirection'&&this.redirection){this.response.setPositive(`Selected: ${this.TargetMenu.Display.getHeading()}`);
             this.response.print();
             this.TargetMenu.start()}
         else{this.response.setNegative('Invalid option type or missing target.');
