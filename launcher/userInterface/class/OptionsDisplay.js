@@ -31,8 +31,8 @@ export default class OptionsDisplay {
         menu.Options=TypeValidator.typeCheck(menu.Options,OptionsArray);
         menu.name_input=TypeValidator.typeCheck(menu.name_input,Boolean);
         const display_options=menu.Options.map((option,index)=>{return menu.name_input?`${option.label}`:`${index}${this.splitter} ${option.label}`});
-        if (this.newline){display_options.forEach(option=>console.log(option))} 
-        else if(!this.newline){console.log(display_options.join(` ${this.seperator} `))}
+        if (this.new_line){display_options.forEach(option=>console.log(option))} 
+        else if(!this.new_line){console.log(display_options.join(` ${this.seperator} `))}
         else {throw new Error(`An error has occured from Menu: nameInput has not been set correctly!`)}}};
     // ----------------------------------------------------------------------------------------------------- //    
 // ---------------------------------------------------------------------- //
