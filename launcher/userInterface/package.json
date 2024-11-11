@@ -1,8 +1,8 @@
 {
-  "name": "anymuz-interaction",
+  "name": "anymuz-interface",
   "type": "module",
-  "version": "1.0.0",
-  "description": "The user interface package used to construct the launcher",
+  "version": "1.2.2",
+  "description": "A modular user interface package designed to construct and manage interactive menu systems, with flexible display and response management.",
   "main": "./index.js",
   "exports": {
     ".": "./index.js",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "tbd"
+    "url": "https://github.com/Anymuz/Discord-Bot-5D/tree/c466264928c772fa223a55f13153daf42712d192/launcher/userInterface"
   },
   "author": "Anymuz",
   "license": "ISC"
