@@ -1,6 +1,6 @@
 // Import required modules and classes
 import ReadLine from 'readline';
-import AnymuzInterface from 'anymuz-interaction';
+import AnymuzInterface from 'anymuz-interface';
 
 // Mock readline interface for user input
 const userReadLine = ReadLine.createInterface({
