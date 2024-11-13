@@ -1,15 +1,14 @@
 {
   "name": "anymuz-interface",
   "type": "module",
-  "version": "1.2.2",
+  "version": "1.2.5",
   "description": "A modular user interface package designed to construct and manage interactive menu systems, with flexible display and response management.",
   "main": "./index.js",
   "exports": {
     ".": "./index.js",
-    "./*": "./class/*.js"
-  },
-  "imports": {
-    "#internal/*": "./internal/*.js"
+    "./*": "./class/*.js",
+    "./StringOperation": "./module/StringOperation.js",
+    "./TypeValidation": "./module/TypeValidation.js"
   },
   "repository": {
     "type": "git",

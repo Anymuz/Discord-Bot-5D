@@ -1,23 +1,23 @@
 // Import required modules and classes
 import ReadLine from 'readline';
 import AnymuzInterface from 'anymuz-interface';
-
+//console.log(AnymuzInterface.TypeValidatior.typeCheck('string', String))
 // Mock readline interface for user input
 const userReadLine = ReadLine.createInterface({
     input: process.stdin,
     output: process.stdout,
 });
-
+new AnymuzInterface.OptionsDisplay()
 // OptionsDisplay configuration
-const optionsDisplay = new AnymuzInterface.OptionsDisplay("|",":",``,true);
+const optionsDisplay = new AnymuzInterface.OptionsDisplay("|",":",true);
 
 // Create display instances
-const mainMenuDisplay = new AnymuzInterface.Display('Main Menu', optionsDisplay);
-const subMenuDisplay = new AnymuzInterface.Display('Submenu', optionsDisplay);
+const mainMenuDisplay = new AnymuzInterface.Display('Main Menu', 'subtext', optionsDisplay);
+const subMenuDisplay = new AnymuzInterface.Display('Submenu', 'subtext',optionsDisplay);
 
 // Define response instances
 const successResponse = new AnymuzInterface.ExecutionResponse('Option executed successfully!', 'Execution failed.');
-const redirectionResponse = new AnymuzInterface.ReplyResponse('Redirecting to submenu...');
+const redirectionResponse = new AnymuzInterface.RedirectResponse('Redirecting to submenu...');
 const menuErrorResponse = new AnymuzInterface.MenuResponse('Invalid choice. Please try again.');
 
 // Define options for the menus first (empty initially)
