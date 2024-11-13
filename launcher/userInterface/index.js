@@ -1,17 +1,17 @@
 // Import every file as modules:
 //----------------------------- //
-import AbstractResponse from 'anymuz-interface/AbstractResponse';
-import Display from 'anymuz-interface/Display';
-import Menu from 'anymuz-interface/Menu';
-import MenuOption from "anymuz-interface/MenuOption";
-import OptionsArray from "anymuz-interface/OptionsArray";
-import OptionsDisplay from "anymuz-interface/OptionsDisplay";
-import StringOperation from "#internal/StringOperation";
-import TypeValidatior from "#internal/TypeValidation";
+import Display from 'Anymuz-Interface/Display';
+import InterfaceResponse from 'Anymuz-Interface/InterfaceResponse';
+import Menu from 'Anymuz-Interface/Menu';
+import MenuOption from "Anymuz-Interface/MenuOption";
+import OptionsArray from "Anymuz-Interface/OptionsArray";
+import OptionsDisplay from "Anymuz-Interface/OptionsDisplay";
+import StringOperation from "Anymuz-Interface/StringOperation";
+import TypeValidation from "Anymuz-Interface/TypeValidation";
 //----------------------------- //
 // Deconstructor to extract response classes: 
 // ------------------------------------------ //
-const { ExecutionResponse, MenuResponse, RedirectResponse } = AbstractResponse;
+const { ExecutionResponse, MenuResponse, RedirectResponse } = InterfaceResponse;
 // ------------------------------------------ //
 // Named export for each module: 
 // ----------------------------- //
@@ -26,7 +26,7 @@ export {
     OptionsDisplay,
     RedirectResponse,
     StringOperation,
-    TypeValidatior
+    TypeValidation
 };
 // ----------------------------- //
 // Default export for all modules as one object:
@@ -42,6 +42,6 @@ export default {
     OptionsDisplay,
     RedirectResponse,
     StringOperation,
-    TypeValidatior
+    TypeValidation
 };
 // ---------------------------------------------
