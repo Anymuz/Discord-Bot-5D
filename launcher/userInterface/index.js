@@ -1,13 +1,13 @@
 // Import every file as modules:
 //----------------------------- //
-import Display from 'Anymuz-Interface/Display';
-import InterfaceResponse from 'Anymuz-Interface/InterfaceResponse';
-import Menu from 'Anymuz-Interface/Menu';
-import MenuOption from "Anymuz-Interface/MenuOption";
-import OptionsArray from "Anymuz-Interface/OptionsArray";
-import OptionsDisplay from "Anymuz-Interface/OptionsDisplay";
-import StringOperation from "Anymuz-Interface/StringOperation";
-import TypeValidation from "Anymuz-Interface/TypeValidation";
+import Display from 'anymuz-interface/Display';
+import InterfaceResponse from 'anymuz-interface/InterfaceResponse';
+import Menu from 'anymuz-interface/Menu';
+import MenuOption from "anymuz-interface/MenuOption";
+import OptionsArray from "anymuz-interface/OptionsArray";
+import OptionsDisplay from "anymuz-interface/OptionsDisplay";
+import StringOperation from "anymuz-interface/StringOperation";
+import TypeValidation from "anymuz-interface/TypeValidation";
 //----------------------------- //
 // Deconstructor to extract response classes: 
 // ------------------------------------------ //

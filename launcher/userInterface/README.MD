@@ -457,4 +457,3 @@ This project is licensed under the ISC License.
 
 ![INTELLECTUAL_RIGHTS](https://img.shields.io/badge/Developed_by%20-Anymuz-red)
 ![LICENCED](https://img.shields.io/badge/License-ISC-blue)
-
