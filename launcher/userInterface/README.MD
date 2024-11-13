@@ -446,7 +446,7 @@ The functions and constants used within `TypeValidation` are listed for internal
 - **NUMBER_TYPES**: Array of supported number types (`int` and `float`), used internally by `numberCheck`.
 
 ## Contributing
-Please contact Anymuz to join the team.
+Please contact Anymuz to  join the team.
 
 ## License
 This project is licensed under the ISC License. 
