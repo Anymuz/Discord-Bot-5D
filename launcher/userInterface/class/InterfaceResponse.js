@@ -50,7 +50,7 @@ export class ExecutionResponse extends InterfaceResponse{
 // ------------------------------------------------------------------------------------------------- //
 /** Class for menu-specific error responses. @class MenuResponse @extends InterfaceResponse @memberof InterfaceResponse @property {string} negative Default error message for the menu. */
 export class MenuResponse extends InterfaceResponse{
-    /** Sets the error message. @public @constructor @param {string} errorMessage Default error message. @throws {TypeError} Throws an error if `errorMessage` is not a string. */
+    /** Sets the error message. @public @constructor @param {string} errorMessage Default error message, default is 'Error!'. @throws {TypeError} Throws an error if `errorMessage` is not a string. */
     constructor(errorMessage=`Error!`){super(),this.negative=TypeValidation.typeCheck(errorMessage,String)};
     /** Prints the error message.
      * @public @example const response = new MenuResponse("Invalid option selected.");
@@ -62,7 +62,7 @@ export class MenuResponse extends InterfaceResponse{
 /** Class for handling redirection messages. @class RedirectResponse @extends InterfaceResponse @memberof InterfaceResponse @property {string} positive Success message for redirection. */
 export class RedirectResponse extends InterfaceResponse{
     /** Sets redirection message. 
-     * @public @constructor @param {string|null} responseMessage Optional initalised message for redirection.
+     * @public @constructor @param {string|null} responseMessage Initalised message for redirection, optional.
      * @throws {TypeError} Throws an error if `responseMessage` is not a string or null. */
     constructor(responseMessage=null){super(),this.positive=responseMessage?TypeValidation.typeCheck(responseMessage,String):null};
     /** Prints the redirection message.

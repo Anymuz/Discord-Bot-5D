@@ -1,6 +1,6 @@
 // Import Modules:
 //---------------- //
-import InterfaceResponse from 'anymuz-interface/InterfaceResponse';
+import {InterfaceResponse} from 'anymuz-interface/InterfaceResponse';
 import Menu from 'anymuz-interface/Menu'
 import TypeValidation from 'anymuz-interface/TypeValidation';
 //---------------- //
@@ -8,15 +8,15 @@ import TypeValidation from 'anymuz-interface/TypeValidation';
 // --------------------------------------------------------------------------------------------------------- //
 /** Class representing an interface menu option that can execute an action or redirect.
  * @class MenuOption @module MenuOption
- * @property {string} type Option type (execution or redirection). @property {string} label Label for the option. @property {Menu} TargetMenu Target menu for redirection.
- * @property {Function} action Function to execute for this option. @property {InterfaceResponse} response Response instance for handling execution or redirection. */
+ * @property {string} type - Option type (execution or redirection). @property {string} label - Label for the option. @property {Menu} TargetMenu - Target menu for redirection.
+ * @property {Function} action - Function to execute for this option. @property {InterfaceResponse} response - Response instance for handling execution or redirection. */
 export default class MenuOption {
     // Constructor Method:
 	// ------------------- //
     /** Initializes MenuOption properties.
      * @public @constructor 
      * @param {string} label Option label. @param {string} type Option type ('execution' or 'redirection'). @param {InterfaceResponse} response Response instance for handling the option.
-     * @param {Menu} targetMenu Target menu instance for redirection. @param {Function} [action=null] Function to execute if type is 'execution'. 
+     * @param {Menu} targetMenu Target menu instance for redirection. @param {Function} [action=null] Function to execute, used only if type is 'execution'. 
      * @throws {Error} Throws an error if the option type is invalid. */
     constructor(label,type,response,targetMenu,action=null){const VALLID_TYPES=['execution','redirection'];
         if(!VALLID_TYPES.includes(type)){throw new Error(`Invalid Type: ${type}, Option type must be either '${VALLID_TYPES.join(' or ')}'`)}

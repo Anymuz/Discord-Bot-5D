@@ -17,8 +17,8 @@ export default class Display{
     /** Initializes Display properties.
      * @public @constructor @param {string} heading Main heading text. @param {string} subText Subtitle text.
      * @param {OptionsDisplay} optionsDisplay OptionsDisplay instance for formatting options.
-     * @param {string} [encasing='[]'] Characters used to encase headings. @param {string} [fillChar='-'] - Character for filling lines.
-     * @param {number} [lineLength=64] Length of each line in the display. */
+     * @param {string} [encasing='[]'] Characters used to encase headings, default is '[]'. @param {string} [fillChar='-'] Character for filling lines, default is '-'.
+     * @param {number} [lineLength=64] Length of each line in the display, default is 64. */
     constructor(heading,subText,optionsDisplay,encasing='[]',fillChar='-',lineLength=64){this.encasing=TypeValidation.stringCheck(encasing,2),
         this.filler=TypeValidation.stringCheck(fillChar,1),
         this.heading=TypeValidation.typeCheck(heading,String),
@@ -40,7 +40,7 @@ export default class Display{
     getText(){return this.text};
     /** Sets the heading text. @public @param {string} heading New heading text. */
     setHeading(heading){this.heading=heading};
-    /** Sets line spacing character. @public @param {string} [fillChar=this.filler] Character for filling the line spacing. */
+    /** Sets line spacing character. @public @param {string} [fillChar=this.filler] Character for filling the line spacing, optional. */
     setLineSpacer(fillChar=this.filler){this.filler=TypeValidation.stringCheck(fillChar,1);
         this.line_spacer=StringOperation.charEvenString(this.line_size,this.filler)};
     /** Sets subheading text. @public @param {string} text New text for subheading. */
@@ -63,10 +63,10 @@ export default class Display{
     // ------------------- //
     // Method displayHeading(encasing,filler) - Formats and outputs the heading as the menu title:
     /** Displays formatted heading.
-     * @public @param {string} [encasing=this.encasing] Encasing characters. @param {string} [filler=this.filler] Filler character for line.
+     * @public @param {string} [encasing=this.encasing] Encasing character, optionals. @param {string} [filler=this.filler] Filler character for line, optional.
      * @example display.displayHeading(); // Logs heading to console. */
-    displayHeading(encasing=this.encasing,filler=this.filler){this.encasing=TypeValidator.stringCheck(encasing,2);
-        this.filler=TypeValidator.stringCheck(filler,1);
+    displayHeading(encasing=this.encasing,filler=this.filler){this.encasing=TypeValidation.stringCheck(encasing,2);
+        this.filler=TypeValidation.stringCheck(filler,1);
         const base_heading=StringOperation.padString(this.line_size,this.filler,this.heading,this.encasing);
         console.log(base_heading)};
     // Method displayText() - Outputs the subheading text for the menu:
@@ -76,7 +76,7 @@ export default class Display{
     /** Presents the menu and prompts for user input.
      * @public @async @param {Menu} menu Menu instance to display. @returns {Promise<string>} Resolves with the user's input after display.
      * @example const userInput = await display.present(menu); */
-    async present(menu){menu=TypeValidator.typeCheck(menu,Menu);
+    async present(menu){menu=TypeValidation.typeCheck(menu,Menu);
         this.#setPrompt(menu);
         this.displayHeading();
         this.displayText();
@@ -85,6 +85,6 @@ export default class Display{
         return userInput};
     // Method setOptionsDisplay(OptionsDisplay) - Assigns an OptionsDisplay object to this display:
     /** Sets the options display. @public @param {OptionsDisplay} optionsDisplay Instance of OptionsDisplay for formatting. */
-    setOptionsDisplay(optionsDisplay){this.optionsDisplay=TypeValidator.typeCheck(optionsDisplay,OptionsDisplay)}};
+    setOptionsDisplay(optionsDisplay){this.optionsDisplay=TypeValidation.typeCheck(optionsDisplay,OptionsDisplay)}};
     // ------------------- //
 // ------------------------------------------------------- //

@@ -3,6 +3,11 @@ import ReadLine from 'readline';
 import AnymuzInterface from 'anymuz-interface';
 //console.log(AnymuzInterface.TypeValidatior.typeCheck('string', String))
 // Mock readline interface for user input
+// console.log("---------------------------[MAIN MENU]----------------------------".length)
+// console.log("-------------------------[Main Menu]--------------------------".length)
+// console.log("-------------------------------[Main Menu]--------------------------------".length)
+// let latest = "--------------------------[Main Menu]---------------------------"
+console.log(latest.length)
 const userReadLine = ReadLine.createInterface({
     input: process.stdin,
     output: process.stdout,

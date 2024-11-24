@@ -327,10 +327,10 @@ new OptionsDisplay(separator="|", splitter=":", newLine=true)
 
 #### Methods
 - **getNewline()**: Retrieves the newline setting for display.
-- **getSeperator()**: Retrieves the option separator.
+- **getseparator()**: Retrieves the option separator.
 - **getSplitter()**: Retrieves the option splitter between index and label.
 - **setNewLine(newline)**: Sets newline display behavior.
-- **setSeperator(seperator)**: Sets single line option separator.
+- **setseparator(separator)**: Sets single line option separator.
 - **setSplitter(splitter)**: Sets option splitter between index and label.
 - **displayOptions(menu)**: Displays options from a Menu object.
 
@@ -397,8 +397,6 @@ new RedirectResponse(responseMessage=null)
 
 #### Methods
 - **print()**: Prints the redirection message.
-
-
 
 ## Modules
 There are two main modules that can be used with this interface package.
