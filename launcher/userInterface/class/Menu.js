@@ -25,7 +25,7 @@ export default class Menu {
     // ------------------- //
     /** Initializes Menu properties.
      * @public @constructor @param {Display} display Display instance. @param {OptionsArray} options Array of menu options.
-     * @param {ReadLine.Interface} userInterface Readline interface instance. @param {boolean} [nameInput=false] Flag for name-based input mode. */
+     * @param {ReadLine.Interface} userInterface Readline interface instance. @param {boolean} [nameInput=false] Flag for name-based input mode, default is false. */
     constructor(display,options,userInterface,nameInput=false){this.AbortControl=new AbortController(),
         this.Display=TypeValidation.typeCheck(display,Display),
         this.MessageResponse=new InterfaceResponse.MenuResponse(),
@@ -75,4 +75,4 @@ export default class Menu {
     /** Starts the menu interaction. @public @async @example await menu.start(); */
     async start(){this.processUserInput(await this.display())}};
     //-------------------- //
-// ------------------------------------------------------------------------------------------------------------------------------------------------ //
+// ---------------------------------------------------------------------//
