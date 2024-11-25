@@ -1,6 +1,6 @@
 // Import Modules:
 //---------------- //
-import {InterfaceResponse} from 'anymuz-interface/InterfaceResponse';
+import {InterfaceResponse, ExecutionResponse, RedirectResponse} from 'anymuz-interface/InterfaceResponse';
 import Menu from 'anymuz-interface/Menu'
 import TypeValidation from 'anymuz-interface/TypeValidation';
 //---------------- //
@@ -24,9 +24,9 @@ export default class MenuOption {
         this.label=TypeValidation.typeCheck(label,String);
         this.TargetMenu=TypeValidation.typeCheck(targetMenu,Menu);
         if(this.type==='execution'){this.action=TypeValidation.typeCheck(action,Function);
-            this.response=TypeValidation.typeCheck(response,InterfaceResponse.ExecutionResponse)}
+            this.response=TypeValidation.typeCheck(response,ExecutionResponse)}
         else{this.redirection=TypeValidation.typeCheck(targetMenu,Menu);
-            this.response=TypeValidation.typeCheck(response,InterfaceResponse.RedirectResponse)}};
+            this.response=TypeValidation.typeCheck(response,RedirectResponse)}};
     // ------------------- //
     // Functional methods:
     //-------------------- //
