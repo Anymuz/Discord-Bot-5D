@@ -1,6 +1,6 @@
 // Import Modules:
 //---------------- //
-import InterfaceResponse from 'anymuz-interface/InterfaceResponse';
+import {MenuResponse} from 'anymuz-interface/InterfaceResponse';
 import Display from 'anymuz-interface/Display';
 import MenuOption from 'anymuz-interface/MenuOption';
 import OptionsArray from 'anymuz-interface/OptionsArray';
@@ -16,63 +16,64 @@ import TypeValidation from 'anymuz-interface/TypeValidation';
     The menu reads user input through the readline interface.   */
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //
 /** Class representing a menu with options for user interaction.
- * @class Menu @module Menu @property {AbortController} AbortControl Controller for aborting input. @property {Display} Display Display instance for the menu.
- * @property {MenuResponse} MessageResponse Response handler for errors. @property {boolean} name_input Flag for name-based input mode.
- * @property {OptionsArray} Options Array of menu options. @property {AbortSignal} target Signal for managing abort control.
- * @property {ReadLine.Interface} UserInterface Interface for reading user input. */
+ * @class Menu @module Menu @property {AbortController} abortController Controller for aborting input. @property {Display} Display Display instance for the menu.
+ * @property {MenuResponse} menuResponse Response handler for errors. @property {boolean} name_input Flag for name-based input mode.
+ * @property {OptionsArray} options Array of menu options. @property {AbortSignal} target Signal for managing abort control.
+ * @property {ReadLine.Interface} userInterface Interface for reading user input. */
 export default class Menu {
     // Constructor Method:
     // ------------------- //
     /** Initializes Menu properties.
      * @public @constructor @param {Display} display Display instance. @param {OptionsArray} options Array of menu options.
-     * @param {ReadLine.Interface} userInterface Readline interface instance. @param {boolean} [nameInput=false] Flag for name-based input mode, default is false. */
-    constructor(display,options,userInterface,nameInput=false){this.AbortControl=new AbortController(),
-        this.Display=TypeValidation.typeCheck(display,Display),
-        this.MessageResponse=new InterfaceResponse.MenuResponse(),
-        this.name_input=TypeValidation.typeCheck(nameInput,Boolean),
-        this.Options=TypeValidation.typeCheck(options,OptionsArray),
-        this.target=this.AbortControl.signal,
-        this.UserInterface=TypeValidation.typeCheck(userInterface,ReadLine.Interface)};
+     * @param {ReadLine.Interface} userInterface Readline interface instance. @param {boolean} [nameInput=false] Flag for name-based input mode, default is false. 
+     * @param {MenuResponse} response MenuResponse object for custom error handling, will instantiate default if null*/
+    constructor(display,options,userInterface,response,nameInput=false){this.abortController=new AbortController(),
+        this.display=TypeValidation.typeCheck(display,Display),
+        this.menuResponse=TypeValidation.typeCheck(response,MenuResponse) || new MenuResponse("Invalid Input: Please select an available option."),
+        this.nameInput=TypeValidation.typeCheck(nameInput,Boolean) || false,
+        this.options=TypeValidation.typeCheck(options,OptionsArray) || new OptionsArray();
+        this.userInterface=TypeValidation.typeCheck(userInterface,ReadLine.Interface) || ReadLine.createInterface({ input: process.stdin, output: process.stdout })};
     // ------------------- //
     // Utility Methods:
     //----------------- //
     /** Adds an option to the menu. @public @param {MenuOption} option Menu option to add. */
-    addOption(option){this.Options.push(option)};
+    addOption(option){this.options.push(TypeValidation.typeCheck(option, MenuOption))};
     /**Retrieves all menu options. @public @returns {OptionsArray} All menu options. */
-    getAllOptions(){return this.Options};
+    getAllOptions(){return this.options};
     /** Retrieves an option at the specified index. @public  @param {number} index Index of the option. @returns {MenuOption} Option at specified index. */
-    getOption(index){return this.Options[index]};
+    getOption(index){return this.options[index]};
     /** Removes all menu options. @public*/
-    removeAllOptions(){this.Options=[]};
+    removeAllOptions(){this.options=[]};
     /** Deletes an option at the specified index. @public @param {number} index Index of the option to remove. */
-    removeOption(index){delete this.Options[index]};
+    removeOption(index){if(index>=0 && index<this.options.length){this.options.splice(index,1)}
+                       else{console.error(`Invalid Parameter: Index must be between 0 and ${this.options.length-1}`)}};
     /** Sets all options for the menu. @public @param {OptionsArray} options Array of menu options. */
-    setAllOptions(options){this.Options=TypeValidation.typeCheck(options,OptionsArray)};
+    setAllOptions(options){this.options=TypeValidation.typeCheck(options,OptionsArray)};
     /** Sets the user interface for menu. @public @param {Interface} userInterface Readline interface instance. */
-    setUserInterface(userInterface){this.UserInterface=TypeValidation.typeCheck(userInterface,ReadLine.Interface)};
+    setUserInterface(userInterface){this.userInterface=TypeValidation.typeCheck(userInterface,ReadLine.Interface)};
     /** Sets whether name input is required. @public @param {boolean} nameInput If true, enables name input. */
-    setNameInput(nameInput){this.name_input=TypeValidation.typeCheck(nameInput,Boolean)};
+    setNameInput(nameInput){this.nameInput=TypeValidation.typeCheck(nameInput,Boolean)};
     /** Updates an option at the specified index. @public @param {number} index Index of the option. @param {MenuOption} option Menu option. */
-    setOption(index,option){this.Options[index]=TypeValidation.typeCheck(option,MenuOption)};
+    setOption(index,option){this.options[index]=TypeValidation.typeCheck(option,MenuOption)};
     //----------------- //
     // Functional methods:
     //-------------------- //
     // Method display() - Calls on its display to show itself to the user, returns the user's input:
-    /** Presents the menu and awaits user input. @public @async @returns {Promise<string>} User input. @example const menuInput = await menu.display(); */
-    async display(){return await this.Display.present(this)};
+    /** Presents the menu. @public @example const menuInput = menu.display(); */
+    display(){this.display.present(this.options)};
     // Method processUserInput() - Processes the user input returned from the Display:
-    /** Processes user input to execute or redirect. @public @param {string} userInput User's input selection. @example menu.processUserInput(userInput); */
-    processUserInput(userInput){let chosenOption;
-        if(userInput=='-1'||userInput=='close'||userInput=='exit'){return this.UserInterface.close()}
-        if(this.name_input){chosenOption=this.Options.find(option=>option.label===userInput);
-            this.MessageResponse.setNegative(`${userInput} is not a valid option, please enter the exact name of the chosen option.`)}
-        else if(!this.name_input){let chosenIndex=parseInt(userInput,10);
-            chosenOption=this.Options[chosenIndex];
-            this.MessageResponse.setNegative(`${userInput} is not an option number, please enter a number that corresponds to the chosen option.`)}
-        else{throw new Error(`Error in Menu object, name_input has not be correctly set (Must be True or False).`)};
-        if(chosenOption){chosenOption.execute()}else{this.MessageResponse.printError()}};
+    /** Processes user input to execute or redirect. @public @param {string} input User's input selection. @example menu.processUserInput(input); */
+    async processUserInput(input){
+        if (['-1','close','exit'].includes(input.toLowerCase())){console.log("Session Terminated.")
+            this.userInterface.close();
+            return};
+        const chosenOption=this.nameInput?this.options.find(option=>option.label===input):this.options[parseInt(input)-1];
+        if (chosenOption){await chosenOption.execute()}else{this.menuResponse.printError()}};
     // Method start() - Waits for user input then parses it into the processUserInput method:
     /** Starts the menu interaction. @public @async @example await menu.start(); */
-    async start(){this.processUserInput(await this.display())}};
+    async start(){
+        this.abortController.display();
+        for await (const line of this.userInterface){await this.processUserInput(line.trim());
+            this.display()}}};
     //-------------------- //
 // ---------------------------------------------------------------------//

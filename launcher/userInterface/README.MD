@@ -43,8 +43,6 @@ npm link anymuz-interface
 The following table provides a structured overview, this is to help developers quickly navigate the codebase and understand the purpose of each file and directory. 
 The **Anymuz Interface** project files are organized in the following structure.
 
-**Changes to package files and directory structure are strictly forbiddeen. Unauthorized releases of original classes and modules infringes on the intellectual and property rights belonging to 5 Dimension Development and may cause payment and subscription for access to future versions.**
-
 | **Path**                    | **Description**                                                     |
 |-----------------------------|---------------------------------------------------------------------|
 | CHANGELOG.MD                | *Changelog file tracking version updates and changes.*              |
@@ -62,8 +60,6 @@ The **Anymuz Interface** project files are organized in the following structure.
 | module/                     | *Directory for internal utility modules used by the classes.*       |
 | module/StringOperation.js   | *Utility functions for string manipulation and formatting.*         |
 | module/TypeValidation.js    | *Functions for validating types used across the project.*           |
-
-*Commercial or profit gained from our property **will** result in **persistent legal action** includeing **fines and prosecutions** in severe cases. Wihtout prior warning, users who cause this package to no longer being freely available are **named and permenantly listed** visibly. Suggestions and additional classes or extension classes are encouraged provided original code is not modified.*
 
 ### Extentions and Polymorphisms
 To add additional methods and properties to adjust functionality an features, create new module files and import and export your child classes if nessecary. Modifications to theese files and directories given in the table will invalidate the package copy, to make changes to suit your needs use `extends` and other object oriented approaches in a SEPERATE directory within your project. 
@@ -450,8 +446,3 @@ Please contact Anymuz to join the team.
 This project is licensed under the ISC License. 
 
 ![NAME](https://img.shields.io/badge/Name-Anymuz%20Interface-green)![VERSION](https://img.shields.io/badge/Version-1.2.2-green)
-
-![DEVELOPER](https://img.shields.io/badge/Developer-%205%20Dimensional%20Development%20(5D2)-red)
-
-![INTELLECTUAL_RIGHTS](https://img.shields.io/badge/Developed_by%20-Anymuz-red)
-![LICENCED](https://img.shields.io/badge/License-ISC-blue)

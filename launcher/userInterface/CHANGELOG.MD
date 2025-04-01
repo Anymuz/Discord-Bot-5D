@@ -2,6 +2,26 @@
 
 All notable changes to the Anymuz Interface are documented in this file. This file includes the version, date of release, added features, changes, and removed features. Each version entry begins with a name and a brief description of the overall purpose of the update. The changes are always listed in the order of `Added` for new features, `Changed` for fixes or modifications to existing features, and `Removed` for features and functions that have become redundant. They are listed in order of significance and alignment with the development goals for that version.
 
+## Anymuz Interface [1.3.0] - 2024-12-02
+**Streamlined Scalability:** *Version 1.3.0 focuses on enhancing maintainability, improving user interaction, and ensuring scalability by introducing refined logic, robust validations, and modular designs.*
+
+### Added
+- Added centralized handling of exit commands (`-1`, `close`, `exit`) within `Menu.js` using `includes` for concise and scalable logic.
+- Introduced default positive and negative response messages in `InterfaceResponse.js` for better user feedback.
+- Added utility method `findOptionByName` in `OptionsArray.js` for efficient searching of menu options.
+- Integrated asynchronous support in `MenuOption.js` for handling long-running actions or menu redirections.
+
+### Changed
+- Refactored `Menu.js` to modularize input handling and validate user input more robustly.
+- Improved `Display.js` by encapsulating formatting logic (`formatHeading`) for better separation of concerns.
+- Updated `OptionsDisplay.js` to streamline menu option rendering with enhanced configuration options (`separator`, `splitter`).
+- Enhanced validation in `StringOperation.js` (e.g., enforced even-length checks in `charEvenString`).
+- Refined `TypeValidation.js` error messages for better clarity and usability.
+
+### Removed
+- Removed redundant exit handling logic outside the centralized `processUserInput` in `Menu.js` for a cleaner design.
+---
+
 ## Anymuz Interface [1.2.5] - 2024-11-13
 **Documentation and Details:** *Version 1.2.5 includes more comprehensive documentation, adjusted naming conventions, and the removal of unnecessary or impractical features. Various general fixes and improvements have been made to the code. The usage policy is now enforced and in effect for all versions.*
   
@@ -27,6 +47,7 @@ All notable changes to the Anymuz Interface are documented in this file. This fi
 - Redundant properties `start` and `end` from `OptionsDisplay`.
 - Deprecated methods `setStart(start)`, `getStart()`, `setEnd(end)`, and `getEnd()` from `OptionsDisplay`.
 - Removed unused `imports` section in `package.json`.
+---
 
 ## Anymuz Interface [1.2.2] - 2024-11-11
 **Documentation Comments:** *Version 1.2.2 introduces JSDoc comments and documentation files.*
@@ -38,6 +59,7 @@ All notable changes to the Anymuz Interface are documented in this file. This fi
 
 ### Changed
 - Updated `package.json`.
+---
 
 ## Anymuz Interface [1.2.1] - 2024-11-10
 **Responsive Redirection:** *Version 1.2.1 centers around UX improvements focusing on the `RedirectResponse` class.*
@@ -48,6 +70,7 @@ All notable changes to the Anymuz Interface are documented in this file. This fi
 ### Changed
 - Improvements to `MenuOption`, `OptionsDisplay`, and `RedirectResponse`.
 - The `RedirectResponse` class no longer requires an initial message for construction.
+---
 
 ## Anymuz Interface [1.2.0] - 2024-11-08
 **Interface Interaction:** *Version 1.2.0 makes changes to the way the interface functions and fixes crucial bugs in the user input.*
@@ -58,6 +81,7 @@ All notable changes to the Anymuz Interface are documented in this file. This fi
 ### Changed
 - Separated the `UserInterface` object from `ReadLine` to prevent duplicate interfaces per menu.
 - Adjustments to prompting and handling user input in `Menu` objects.
+---
 
 ## Anymuz Interface [1.1.5] - 2024-11-07
 **Minor Tweaking:** *Version 1.1.5 makes small adjustments.*
@@ -65,6 +89,7 @@ All notable changes to the Anymuz Interface are documented in this file. This fi
 ### Changed
 - Adjusted class names, renaming `ReplyResponse` to `RedirectResponse`.
 - Small bug fixes.
+---
 
 ## Anymuz Interface [1.0.0] - 2024-11-07
 **Initial release:** *Version 1.0.0 launches Anymuz Interface as the first release for testing.*

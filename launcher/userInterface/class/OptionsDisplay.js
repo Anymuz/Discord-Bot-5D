@@ -46,9 +46,9 @@ newLine (boolean): Display each option on a new line, default is true.
      * @public @param {Menu} menu Menu instance containing an `OptionsArray`. @throws {Error} Throws an error if `new_line` is not set. @example optionsDisplay.displayOptions(menu); */
     displayOptions(menu){
         menu=TypeValidation.typeCheck(menu,Menu)
-        menu.Options=TypeValidation.typeCheck(menu.Options,OptionsArray);
-        menu.name_input=TypeValidation.typeCheck(menu.name_input,Boolean);
-        const display_options=menu.Options.map((option,index)=>{return menu.name_input?`${option.label}`:`${index}${this.splitter} ${option.label}`});
+        menu.options=TypeValidation.typeCheck(menu.options,OptionsArray);
+        menu.nameInput=TypeValidation.typeCheck(menu.nameInput,Boolean);
+        const display_options=menu.options.map((option,index)=>{return menu.nameInput?`${option.label}`:`${index}${this.splitter} ${option.label}`});
         if (this.new_line){display_options.forEach(option=>console.log(option))} 
         else if(!this.new_line){console.log(display_options.join(` ${this.separator} `))}
         else {throw new Error(`An error has occured from Menu: new_line has not been set correctly!`)}}};

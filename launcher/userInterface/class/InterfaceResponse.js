@@ -11,7 +11,11 @@ export class InterfaceResponse{
     // Constructor Method:
     // ------------------- //
     /** Constructor for InterfaceResponse. @public @constructor */
-    constructor(){if(new.target===InterfaceResponse){throw new Error("ABSTRACT CLASS: InterfaceResponse => Cannot instantiate ABSTRACT.")}};
+    constructor(){if(new.target===InterfaceResponse){
+        throw new Error("ABSTRACT CLASS InterfaceResponse: Cannot instantiate ABSTRACT.")}
+        this.positive =  "Action succeeded.";
+        this.negative =  "Action failed.";
+    };
     // ------------------- //
     // Utility Methods: 
     //----------------- //
@@ -44,7 +48,7 @@ export class ExecutionResponse extends InterfaceResponse{
     /** Prints the error message.
      * @public @param {string} functionName Function name. @example const response = new ExecutionResponse("Success!", "Error!");
      * response.printErr("FunctionName"); // Logs: "ERROR FunctionName: Error!"  */
-    printErr(functionName){console.log(`ERROR ${functionName}: ${this.negative}`)}};
+    printErr(functionName){console.error(`ERROR ${functionName}: ${this.negative}`)}};
 // ----------------------------------------------------------------------------------------- //
 // CLASS  MenuResponse: Each menu has to be assigned at least one negative response for input error.
 // ------------------------------------------------------------------------------------------------- //
@@ -55,7 +59,7 @@ export class MenuResponse extends InterfaceResponse{
     /** Prints the error message.
      * @public @example const response = new MenuResponse("Invalid option selected.");
      * response.printError(); // Logs: "Invalid option selected."  */
-    printError(){console.log(this.negative)}};
+    printError(){console.error(this.negative)}};
 // ------------------------------------------------------------------------------------------------- //
 // CLASS  RedirectResponse: A redirect option must contain a redirectResponse to it being set.
 // ------------------------------------------------------------------------------------- //
@@ -68,7 +72,7 @@ export class RedirectResponse extends InterfaceResponse{
     /** Prints the redirection message.
      * @public @example const response = new RedirectResponse("Redirecting...");
      * response.print(); // Logs: "Redirecting..." */
-    print(){console.log(this.positive)}};
+    print(){if(this.positive){console.log(this.positive)}else{console.log("No redirection message set.")}}};
 // ------------------------------------------------------------------------------------- //
 // ----------------- //
 // Default export: Allows import of abstract InterfaceResponse as object to reference the inheritance classes.

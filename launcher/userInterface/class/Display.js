@@ -9,7 +9,7 @@ import TypeValidation from 'anymuz-interface/TypeValidation';
 // ------------------------------------------------------- //
 /** Class managing menu display with heading and options.
  * @class Display @module Display @property {string} heading Main heading text. @property {string} text Subtitle text. @property {string} encasing Characters used to encase headings.
- * @property {string} filler Character for filling lines. @property {number} line_size Length of each line in the display. 
+ * @property {string} filler Character for filling lines. @property {number} lineSize Length of the display heading. 
  * @property {OptionsDisplay} OptionsDisplay Instance used to format display options. @throws {TypeError} Throws an error if input types are incorrect. */
 export default class Display{
     // Constructor Method:
@@ -22,11 +22,10 @@ export default class Display{
     constructor(heading,subText,optionsDisplay,encasing='[]',fillChar='-',lineLength=64){this.encasing=TypeValidation.stringCheck(encasing,2),
         this.filler=TypeValidation.stringCheck(fillChar,1),
         this.heading=TypeValidation.typeCheck(heading,String),
-        this.text=TypeValidation.typeCheck(subText,String),
-        this.line_size=TypeValidation.numberCheck(lineLength,TypeValidation.type_integer),
-        this.line_spacer=StringOperation.charEvenString(this.line_size,this.filler),
-        this.OptionsDisplay=TypeValidation.typeCheck(optionsDisplay,OptionsDisplay),
-        this.prompt=``};
+        this.lineSize=TypeValidation.numberCheck(lineLength,TypeValidation.type_integer),
+        this.optionsDisplay=TypeValidation.typeCheck(optionsDisplay,OptionsDisplay),
+        this.text=TypeValidation.typeCheck(subText,String)};
+
     // ------------------- //
     // Utility Methods:
     // ---------------- //
@@ -34,15 +33,10 @@ export default class Display{
     getEncasing(){return this.encasing}
     /** Retrieves the heading text. @public @returns {string} Heading text. */
     getHeading(){return this.heading};
-    /** Retrieves the line spacing for heading format. @public @returns {string} Line spacing. */
-    getLineSpacer(){return this.line_spacer};
     /** Retrieves the subheading text. @public @returns {string} Subheading text. */
     getText(){return this.text};
     /** Sets the heading text. @public @param {string} heading New heading text. */
     setHeading(heading){this.heading=heading};
-    /** Sets line spacing character. @public @param {string} [fillChar=this.filler] Character for filling the line spacing, optional. */
-    setLineSpacer(fillChar=this.filler){this.filler=TypeValidation.stringCheck(fillChar,1);
-        this.line_spacer=StringOperation.charEvenString(this.line_size,this.filler)};
     /** Sets subheading text. @public @param {string} text New text for subheading. */
     setText(text){this.text=TypeValidation.typeCheck(text,String)};
     // --------------//
@@ -52,12 +46,12 @@ export default class Display{
     /** Sets the prompt based on menu properties.
 	 *  @private @param {Menu} menu Menu instance for which the prompt is set. @throws {Error} Throws an error if `nameInput` is not set correctly. */
     #setPrompt(menu){menu=TypeValidation.typeCheck(menu,Menu);
-        if (menu.name_input){this.prompt=`Please input answer: `}
-        else if(!menu.name_input){this.prompt=`Please input corresponding number: `}
+        if (menu.nameInput){this.prompt=`Please input answer: `}
+        else if(!menu.nameInput){this.prompt=`Please input corresponding number: `}
         else{throw new Error(`An error has occurred, nameInput has not been set correctly!`)}};
     // Method showPrompt() - Use readline to prompt user input:
     /** Prompts the user for input. @private @param {Menu} menu Menu instance to interact with. @returns {Promise<string>} Resolves with the user's input. */
-    #showPrompt(menu){return new Promise((resolve)=>{let target=menu.target;menu.UserInterface.question(this.prompt,{target},(userInput)=>{resolve(userInput)})})};
+    #showPrompt(menu){return new Promise((resolve)=>{let target=menu.target;menu.userInterface.question(this.prompt,{target},(userInput)=>{resolve(userInput)})})};
     // ----------------- //
     // Functional Methods:
     // ------------------- //
@@ -80,7 +74,7 @@ export default class Display{
         this.#setPrompt(menu);
         this.displayHeading();
         this.displayText();
-        this.OptionsDisplay.displayOptions(menu);
+        this.optionsDisplay.displayOptions(menu);
         let userInput=await this.#showPrompt(menu);
         return userInput};
     // Method setOptionsDisplay(OptionsDisplay) - Assigns an OptionsDisplay object to this display:
